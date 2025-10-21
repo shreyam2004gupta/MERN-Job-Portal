@@ -7,45 +7,53 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
+import { USER_API_ENDPOINT } from "@/utils/data.js";
+import { Navigate,useNavigate } from "react-router-dom";
+import { useDispatch ,useSelector } from "react-redux";
+import { setLoading } from "@/Redux/authslice";
 
 const login = () => {
-      const[input,setInput]=useState({
-         
-          email:"",
-          password:"",
-          role:"",
-          
-          
-        });
-        
-        const changeEventHandler=(e)=>{
-          setInput({...input,[e.target.name]:e.target.value});
-        }
-        const FileEventhandler=(e)=>{
-          setInput({...input,file: e.target.files ?.[0]});
-        }
-  
-  
-       const submitHandler= async(e)=>{
-               e.preventDefault();
-               
-                try {
-                  const res = await axios.post(`${USER_API_ENDPOINT}/login`,formData,{
-                    headers:{
-                     "Content-Type":"application/json",
-                    },
-                    withCredentials:true,
-                  });
-                  if(res.data.success){
-                   navigate("/");
-                   toast.success(res.data.message);
-                  }
-                } catch(error) {
-                  console.error(error);
-                  toast.error(error.response.data.message);
-                }
-             };
-  
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+    role: "",
+  });
+  const Navigate = useNavigate();
+   const dispatch =useDispatch();
+    const {loading}=useSelector((store)=> store.auth);
+  const changeEventHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+  const FileEventhandler = (e) => {
+    setInput({ ...input, file: e.target.files?.[0] });
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+
+    try {
+      dispatch(setLoading(true));
+      const res = await axios.post(`${USER_API_ENDPOINT}/login`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      if (res.data.success) {
+        Navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      const errorMessage = error.respnse
+        ? error.response.data.message
+        : "An unexpected error occured";
+      toast.error(errorMessage);
+    }
+    finally{
+      dispatch(setLoading(false));
+    }
+  };
 
   return (
     <div>
@@ -106,9 +114,18 @@ const login = () => {
               </RadioGroup>
             </div>
           </div>
-          <button className="block w-full py-3 text-white hover:bg-primary/90 rounded-md bg-blue-600">
+          {loading ?(
+            <div className="flex items-center justify-center my-10">
+              <div className="spinner-border text-blue-600" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div>
+          ):(
+            <button className="block w-full py-3 text-white hover:bg-primary/90 rounded-md bg-blue-600">
             Login
           </button>
+          )}
+          
           <p className="text-grey-500 text-sm mt-2 text-center">
             No Account?{" "}
             <Link to="/Register" className="">

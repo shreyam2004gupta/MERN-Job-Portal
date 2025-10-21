@@ -5,8 +5,10 @@ import {Input} from "../ui/input";
 import { RadioGroupItem, RadioGroup} from "../ui/radio-group"; 
 import {Link,useNavigate} from "react-router-dom";
 import { useState } from "react";
-import { USER_API_ENDPOINT } from "@/utils/data";
+import { USER_API_ENDPOINT } from "@/utils/data.js";
 import { Toaster,toast } from "sonner";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoading } from "@/Redux/authslice.js";
 
 const Register = () => {
     const[input,setInput]=useState({
@@ -18,7 +20,9 @@ const Register = () => {
         phoneNumber:"",
       });
       const navigate =useNavigate();
-
+      const dispatch =useDispatch();
+      
+      const {loading}=useSelector((store)=> store.auth);
       const changeEventHandler=(e)=>{
         setInput({...input,[e.target.name]:e.target.value});
       }
@@ -39,6 +43,7 @@ const Register = () => {
           formData.append("file",input.file);
         }
          try {
+          dispatch(setLoading(true));
            const res = await axios.post(`${USER_API_ENDPOINT}/register`,formData,{
              headers:{
               "Content-Type":"multipart/form-data"
@@ -54,6 +59,9 @@ const Register = () => {
            const errorMessage= error.respnse ? error.response.data.message:"An unexpected error occured";
            toast.error(errorMessage);
          }
+          finally{
+               dispatch(setLoading(false));
+             }
       };
   return (
     <div>
@@ -146,12 +154,21 @@ const Register = () => {
               </div>
             </div>
           </div>
-          <button
-            type="submit"
-            className="block w-full py-3 text-white bg-primary hover:bg-primary/90 rounded-md"
-          >
-            Register
-          </button>
+          {loading ? (
+            <div className="flex items-center justify-center my-10">
+              <div className="spinner-border text-blue-600" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="block w-full py-3 text-white bg-primary hover:bg-primary/90 rounded-md"
+            >
+              Register
+            </button>
+          )}
+
           <p className="text-grey-500 text-sm mt-2 text-center">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-500">
