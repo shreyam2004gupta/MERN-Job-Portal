@@ -1,6 +1,6 @@
 import express from "express";
 import authenticateToken from "../Middleware/isAuthenticated.js";
-import { getAllCompanies, getcompany, registerCompany, upadtecompany } from "../controllers/comany.controller.js";
+import { getAllCompanies, getcompany, registerCompany, upadtecompany } from "../controllers/company.controller.js";
 
 const router = express.Router();
 

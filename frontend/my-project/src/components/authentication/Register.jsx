@@ -9,6 +9,7 @@ import { USER_API_ENDPOINT } from "@/utils/data.js";
 import { Toaster,toast } from "sonner";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoading } from "@/Redux/authslice.js";
+import axios from "axios";
 
 const Register = () => {
     const[input,setInput]=useState({
@@ -56,7 +57,7 @@ const Register = () => {
            }
          } catch(error) {
            console.log(error);
-           const errorMessage= error.respnse ? error.response.data.message:"An unexpected error occured";
+           const errorMessage= error.response ? error.response.data.message:"An unexpected error occured";
            toast.error(errorMessage);
          }
           finally{

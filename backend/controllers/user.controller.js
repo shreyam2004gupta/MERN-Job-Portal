@@ -161,11 +161,7 @@ export const updateProfile = async (req, res) => {
    if(skills){
     user.profile.skills=skillsArray;
    }
-    user.fullname = fullname;
-    user.email = email;
-    user.phoneNumber = phoneNumber;
-    user.bio = bio;
-    user.skills = skillsArray;
+    
 
     await user.save();
 
