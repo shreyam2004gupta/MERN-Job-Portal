@@ -4,7 +4,8 @@ import Login from "./components/authentication/login";
 import Register from "./components/authentication/Register";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/components_lite/Home";
-
+import Terms from "./components/components_lite/Terms";
+import Rights from "./components/components_lite/Rights";
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -18,6 +19,14 @@ const appRouter = createBrowserRouter([
     path: "/Register",
     element: <Register />,
   },
+  {
+    path: "/Terms",
+    element: <Terms />
+  },
+  {
+    path:"/Rights",
+    element:<Rights/>
+  }
 ]);
 const App = () => {
   return (

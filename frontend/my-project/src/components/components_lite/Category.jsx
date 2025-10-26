@@ -20,9 +20,9 @@ const Categories= [
   ]
   const Category = () => {
   return (
-      <div className="gap-8 flex-col flex">
+      <div>
         <div>
-            <h1 className="text-2xl font-bold text-center text-blue-500">Categories of our Job</h1>
+            <h1 className="text-2xl font-bold text-center text-blue-500 p-5">Categories of our Job</h1>
          </div>
       <Carousel className="w-full max-w-xl mx-auto">
         <CarouselContent>
