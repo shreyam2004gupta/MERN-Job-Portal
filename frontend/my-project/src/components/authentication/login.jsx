@@ -8,9 +8,9 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { USER_API_ENDPOINT } from "@/utils/data.js";
-import { Navigate,useNavigate } from "react-router-dom";
-import { useDispatch ,useSelector } from "react-redux";
-import { setLoading } from "@/Redux/authslice";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading, setUser } from "@/Redux/authslice.js";
 
 const login = () => {
   const [input, setInput] = useState({
@@ -19,8 +19,8 @@ const login = () => {
     role: "",
   });
   const Navigate = useNavigate();
-   const dispatch =useDispatch();
-    const {loading}=useSelector((store)=> store.auth);
+  const dispatch = useDispatch();
+  const { loading } = useSelector((store) => store.auth);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -40,17 +40,17 @@ const login = () => {
         withCredentials: true,
       });
       if (res.data.success) {
+        dispatch(setUser(res.data.user));
         Navigate("/");
         toast.success(res.data.message);
       }
     } catch (error) {
       console.log(error);
-      const errorMessage = error.respnse
+      const errorMessage = error.response
         ? error.response.data.message
-        : "An unexpected error occured";
+        : "An unexpected error occurred";
       toast.error(errorMessage);
-    }
-    finally{
+    } finally {
       dispatch(setLoading(false));
     }
   };
@@ -114,18 +114,18 @@ const login = () => {
               </RadioGroup>
             </div>
           </div>
-          {loading ?(
+          {loading ? (
             <div className="flex items-center justify-center my-10">
               <div className="spinner-border text-blue-600" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             </div>
-          ):(
+          ) : (
             <button className="block w-full py-3 text-white hover:bg-primary/90 rounded-md bg-blue-600">
-            Login
-          </button>
+              Login
+            </button>
           )}
-          
+
           <p className="text-grey-500 text-sm mt-2 text-center">
             No Account?{" "}
             <Link to="/Register" className="">
