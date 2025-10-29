@@ -1,69 +1,69 @@
 import React from "react";
 import Navbar from "../components_lite/Navbar";
 import { Label } from "../ui/label";
-import {Input} from "../ui/input";
-import { RadioGroupItem, RadioGroup} from "../ui/radio-group"; 
-import {Link,useNavigate} from "react-router-dom";
+import { Input } from "../ui/input";
+import { RadioGroupItem, RadioGroup } from "../ui/radio-group";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { USER_API_ENDPOINT } from "@/utils/data.js";
-import { Toaster,toast } from "sonner";
+import { Toaster, toast } from "sonner";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoading } from "@/Redux/authslice.js";
 import axios from "axios";
 
 const Register = () => {
-    const[input,setInput]=useState({
-        fullname:"",
-        email:"",
-        password:"",
-        role:"",
-        file:"",
-        phoneNumber:"",
+  const [input, setInput] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+    role: "",
+    file: "",
+    phoneNumber: "",
+  });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { loading } = useSelector((store) => store.auth);
+  const changeEventHandler = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+  const FileEventhandler = (e) => {
+    setInput({ ...input, file: e.target.files?.[0] });
+  };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("fullname", input.fullname);
+    formData.append("email", input.email);
+    formData.append("password", input.password);
+    formData.append("role", input.role);
+    formData.append("phoneNumber", input.phoneNumber);
+    if (input.file) {
+      formData.append("file", input.file);
+    }
+    try {
+      dispatch(setLoading(true));
+      const res = await axios.post(`${USER_API_ENDPOINT}/register`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
       });
-      const navigate =useNavigate();
-      const dispatch =useDispatch();
-      
-      const {loading}=useSelector((store)=> store.auth);
-      const changeEventHandler=(e)=>{
-        setInput({...input,[e.target.name]:e.target.value});
+      if (res.data.success) {
+        navigate("/login");
+        toast.success(res.data.message);
       }
-      const FileEventhandler=(e)=>{
-        setInput({...input,file: e.target.files ?.[0]});
-      }
-
-
-      const submitHandler= async(e)=>{
-        e.preventDefault();
-        const formData= new FormData();
-        formData.append("fullname",input.fullname);
-        formData.append("email",input.email);
-        formData.append("password",input.password);
-        formData.append("role",input.role);
-        formData.append("phoneNumber",input.phoneNumber);
-        if(input.file){
-          formData.append("file",input.file);
-        }
-         try {
-          dispatch(setLoading(true));
-           const res = await axios.post(`${USER_API_ENDPOINT}/register`,formData,{
-             headers:{
-              "Content-Type":"multipart/form-data"
-             },
-             withCredentials:true,
-           });
-           if(res.data.success){
-            navigate("/login");
-            toast.success(res.data.message);
-           }
-         } catch(error) {
-           console.log(error);
-           const errorMessage= error.response ? error.response.data.message:"An unexpected error occured";
-           toast.error(errorMessage);
-         }
-          finally{
-               dispatch(setLoading(false));
-             }
-      };
+    } catch (error) {
+      console.log(error);
+      const errorMessage = error.response
+        ? error.response.data.message
+        : "An unexpected error occured";
+      toast.error(errorMessage);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
   return (
     <div>
       <Navbar></Navbar>

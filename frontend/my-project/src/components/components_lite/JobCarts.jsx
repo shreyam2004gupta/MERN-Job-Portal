@@ -2,7 +2,7 @@ import React from 'react';
 import {Badge} from "../ui/badge";
 const JobCarts = () => {
   return (
-    <div className="p-5 rounded-medium shadow-xl bg-white boreder-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400">
+    <div className="p-5 rounded-md shadow-xl bg-white boreder-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400">
       <div>
         <h1 className='text-lg font-medium'>Company Name</h1>
         <p className='text-sm text-gray-400'>INDIA</p>

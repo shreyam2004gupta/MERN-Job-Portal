@@ -1,0 +1,2 @@
+- [x] Edit Filter.jsx to fix syntax errors: add returns in map, add key props, associate labels properly, remove unused index.
+- [x] Run the frontend to test the Filter component renders without errors and filters work.

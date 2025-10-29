@@ -186,4 +186,4 @@ export const updateProfile = async (req, res) => {
       success: false,
     });
   }
-}
+}                                                                                                                                  

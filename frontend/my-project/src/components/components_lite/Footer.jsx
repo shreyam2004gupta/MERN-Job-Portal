@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const Footer = () => {
   return (
-    <div style={{ textAlign: "center", padding: "20px", margin: "20px" }}>
+    <div style= {{ textAlign: "center", padding: "20px", margin: "20px" }}>
       <p>
         {" "}
         2025 My-Project.<span> 
