@@ -4,6 +4,7 @@ import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Mail, Pen,Contact } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Badge } from 'lucide-react';
+import Appliedjob from './Appliedjob';
 
 const skills=["react","html","js","nodejs","mongodb"];
 const Profile = () => {
@@ -11,7 +12,7 @@ const Profile = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto bg-white border-gray-500 rounded-2xl my-5 p-8 shadow shadow-gray-500 hover:shadow-blue-400">
+      <div className="max-w-4xl mx-auto bg-white border-gray-500 rounded-2xl my-5 p-8 shadow shadow-gray-500 hover:shadow-blue-400">
         <div className="flex justify-between">
           <div className="flex items-center gap-5  ">
             <Avatar className="cursor-pointer h-24 w-24">
@@ -47,7 +48,7 @@ const Profile = () => {
             <h1>Skills</h1>
             {skills.length != 0 ? (
               skills.map((items, index) => {
-                <Badge key={index}>{items}</Badge>;
+                <Badge key={index}>{index}</Badge>;
               })
             ) : (
               <span>na</span>
@@ -61,7 +62,7 @@ const Profile = () => {
                   target="_blank"
                   href="https://in.linkedin.com/in/shreyam-gupta-2b6858279"
                   download="resume.pdf"
-                  className='bg-blue-500 rounded-2xl hover:bg-gray-400 cursor-pointer'
+                  className="bg-blue-500 rounded-2xl hover:bg-gray-400 cursor-pointer"
                 >
                   Download Resume
                 </a>
@@ -71,11 +72,10 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div>
-            <h1>
-                applied
-            </h1>
-        </div>
+      </div>
+      <div className="max-w-4xl mx-auto bg-white rounded-2xl">
+        <h1 className="text-md font-bold">Applied jobs</h1>
+        <Appliedjob />
       </div>
     </div>
   );
