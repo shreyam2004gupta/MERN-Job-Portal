@@ -6,7 +6,7 @@ import {Badge} from "../ui/badge";
 import { useNavigate } from 'react-router-dom';
 
 
-const Job = () => {
+const Job9 = () => {
   const navigate= useNavigate();
   const jobId="jugu";
   return (
@@ -69,4 +69,4 @@ const Job = () => {
   )
 }
 
-export default Job
+export default Job9

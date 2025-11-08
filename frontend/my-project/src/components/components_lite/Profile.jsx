@@ -3,7 +3,7 @@ import Navbar from './Navbar'
 import { Avatar, AvatarImage } from '@radix-ui/react-avatar'
 import { Mail, Pen,Contact } from 'lucide-react';
 import { Button } from '../ui/button';
-import { Badge } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
 import Appliedjob from './Appliedjob';
 import {useState} from 'react';
 import EditProfile from "./EditProfile";
@@ -47,11 +47,11 @@ const Profile = () => {
 
         <div>
           <div>
-            <h1>Skills</h1>
-            {skills.length != 0 ? (
-              skills.map((items, index) => {
-                <Badge key={index}>{index}</Badge>;
-              })
+            <h1 className='font-bold'>Skills</h1>
+            {skills.length !== 0 ? (
+              skills.map((items, index) => 
+                <Badge key={index}>{items}</Badge>
+              )
             ) : (
               <span>na</span>
             )}

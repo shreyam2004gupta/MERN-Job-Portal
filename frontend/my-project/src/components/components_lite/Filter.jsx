@@ -1,5 +1,5 @@
 import React from "react";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
+import {RadioGroup, RadioGroupItem} from "../ui/radio-group";
 
 const filterData = [
   {
@@ -7,12 +7,13 @@ const filterData = [
     array: [
       "Delhi",
       "Mumbai",
-      "Kolhapur",
+      "Noida",
       "Pune",
       "Bangalore",
       "Hyderabad",
       "Chennai",
-      "Remote",
+      "Kanpur",
+      "Lucknow",
     ],
   },
   {
@@ -45,20 +46,16 @@ const Filter = () => {
     <div className="w-full bg-white rounded-md">
       <h1 className="font-bold text-lg">Filter Jobs</h1>
       <hr className="mt-3" />
-      <RadioGroup >
+      <RadioGroup>
         {filterData.map((data, index) => (
-          <div key={index}>
-            <h2 className="font-bold text-lg">{data.filterType}</h2>
-
-            {data.array.map((item, index) => {
-              const itemId = `Id${index}-${index}`;
-              return (
-                <div key={itemId} className="flex items-center space-x-2 my-2">
-                  <RadioGroupItem value={item} id={itemId}></RadioGroupItem>
-                  <label htmlFor={itemId}>{item}</label>
-                </div>
-              );
-            })}
+          <div>
+            <h2>{data.filterType}</h2>
+            {data.array.map((item, idx) => (
+              <div className="flex items-center" key={item}>
+                <RadioGroupItem value={item}></RadioGroupItem>
+                <label>{item}</label>
+              </div>
+            ))}
           </div>
         ))}
       </RadioGroup>
