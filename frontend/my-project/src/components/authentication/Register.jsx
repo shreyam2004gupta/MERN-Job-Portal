@@ -7,9 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { USER_API_ENDPOINT } from "@/utils/data.js";
 import { Toaster, toast } from "sonner";
-import { useSelector, useDispatch } from "react-redux";
-import { setLoading } from "@/Redux/authslice.js";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "@/Redux/authslice";
 
 const Register = () => {
   const [input, setInput] = useState({
@@ -20,6 +20,7 @@ const Register = () => {
     file: "",
     phoneNumber: "",
   });
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -33,6 +34,7 @@ const Register = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log(input);
     const formData = new FormData();
     formData.append("fullname", input.fullname);
     formData.append("email", input.email);
@@ -44,10 +46,8 @@ const Register = () => {
     }
     try {
       dispatch(setLoading(true));
-      const res = await axios.post(`${USER_API_ENDPOINT}/register`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const res = await axios.post(`${USER_API_ENDPOINT}/register`, input, {
+        headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
       if (res.data.success) {
@@ -155,6 +155,13 @@ const Register = () => {
               </div>
             </div>
           </div>
+
+          <div className="flex items-center justify-center my-10">
+            <div className="spinner-border text-blue-600" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+
           {loading ? (
             <div className="flex items-center justify-center my-10">
               <div className="spinner-border text-blue-600" role="status">

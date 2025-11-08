@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
+    console.log("Body:", req.body);
     const { fullname, email, phoneNumber, password, role } = req.body;
     console.log(fullname, email, phoneNumber, password, role);
 
@@ -47,8 +48,7 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { email, password,role} = req.body;
-    
+    const { email, password, role } = req.body;
 
     if (!email || !password || !role) {
       return res.status(400).json({
@@ -81,7 +81,7 @@ export const login = async (req, res) => {
     const tokenData = {
       userId: user._id,
     };
-    const token = jwt.sign(tokenData, process.env.JWT_SECRET, {
+    const token = await jwt.sign(tokenData, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
 
@@ -91,7 +91,7 @@ export const login = async (req, res) => {
       email: user.email,
       phoneNumber: user.phoneNumber,
       role: user.role,
-      profile:user.profile,
+      profile: user.profile,
     };
 
     return res
@@ -99,7 +99,7 @@ export const login = async (req, res) => {
       .cookie("token", token, {
         maxAge: 24 * 60 * 60 * 1000,
         httpOnly: true,
-        sameSite:"Strict",
+        sameSite: "Strict",
       })
       .json({
         message: `Welcome back ${user.fullname}`,
@@ -133,9 +133,9 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file =req.file;
+    const file = req.file;
     let skillsArray;
-    if(skills){
+    if (skills) {
       const skillsArray = skills.split(",");
     }
     const userId = req.id;
@@ -146,23 +146,22 @@ export const updateProfile = async (req, res) => {
         success: false,
       });
     }
-    
-   if(fullname){
-    user.fullname=fullname;
-   }
-   if(email){
-    user.email=email;
-   }
-   if(phoneNumber){
-    user.phoneNumber=phoneNumber;
-  }
-   if(bio){
-    user.profile.bio=bio;
-   }
-   if(skills){
-    user.profile.skills=skillsArray;
-   }
-    
+
+    if (fullname) {
+      user.fullname = fullname;
+    }
+    if (email) {
+      user.email = email;
+    }
+    if (phoneNumber) {
+      user.phoneNumber = phoneNumber;
+    }
+    if (bio) {
+      user.profile.bio = bio;
+    }
+    if (skills) {
+      user.profile.skills = skillsArray;
+    }
 
     await user.save();
 
@@ -187,4 +186,4 @@ export const updateProfile = async (req, res) => {
       success: false,
     });
   }
-}                                                                                                                                  
+};

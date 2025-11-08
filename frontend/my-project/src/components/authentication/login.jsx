@@ -129,7 +129,7 @@ const login = () => {
           <p className="text-grey-500 text-sm mt-2 text-center">
             No Account?{" "}
             <Link to="/Register" className="">
-              <button className="block w-3/4 py-3 my-3 text-white flex hover:bg-gray-500  bg-green-400 justify-center items-center max-w-7xl mx-auto">
+              <button className=" w-3/4 py-3 my-3 text-white flex hover:bg-gray-500  bg-green-400 justify-center items-center max-w-7xl mx-auto">
                 Register
               </button>
             </Link>

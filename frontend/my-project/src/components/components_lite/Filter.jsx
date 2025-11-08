@@ -50,8 +50,8 @@ const Filter = () => {
           <div key={index}>
             <h2 className="font-bold text-lg">{data.filterType}</h2>
 
-            {data.array.map((item, indx) => {
-              const itemId = `Id${index}-${indx}`;
+            {data.array.map((item, index) => {
+              const itemId = `Id${index}-${index}`;
               return (
                 <div key={itemId} className="flex items-center space-x-2 my-2">
                   <RadioGroupItem value={item} id={itemId}></RadioGroupItem>

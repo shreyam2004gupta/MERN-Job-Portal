@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
       },
       skills: [{ type: String }],
       resume: {
-        type: String, 
+        type: String,
       },
       resumeOriginalname: {
         type: String,
@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema(
         ref: "Company",
       },
       profilePhoto: {
-        type: String, 
+        type: String,
         default: "",
       },
     },

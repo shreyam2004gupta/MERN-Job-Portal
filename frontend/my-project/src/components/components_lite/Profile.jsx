@@ -5,10 +5,15 @@ import { Mail, Pen,Contact } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Badge } from 'lucide-react';
 import Appliedjob from './Appliedjob';
+import {useState} from 'react';
+import EditProfile from "./EditProfile";
+import { useSelector } from 'react-redux';
 
 const skills=["react","html","js","nodejs","mongodb"];
+const isResume = true;
 const Profile = () => {
-    const isResume=true;
+  const[open,opened]=useState(false);
+  const {user}=useSelector((store)=>store.auth);
   return (
     <div>
       <Navbar />
@@ -23,16 +28,13 @@ const Profile = () => {
               />
             </Avatar>
             <div>
-              <h1>Full Name</h1>
+              <h1>{user?.fullname}</h1>
               <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Debitis itaque, soluta voluptate mollitia consequatur
-                exercitationem, numquam eveniet harum autem explicabo saepe eius
-                id, earum corrupti fuga. Hic natus dolores ipsum quia vero.
+                {user?.profile?.bio}
               </p>
             </div>
           </div>
-          <Button className="text-right" variant="outline">
+          <Button className="text-right" variant="outline" onClick={()=>opened(true)}>
             <Pen />
           </Button>
         </div>
@@ -77,6 +79,7 @@ const Profile = () => {
         <h1 className="text-md font-bold">Applied jobs</h1>
         <Appliedjob />
       </div>
+      <EditProfile open={open} opened={opened}/>
     </div>
   );
 }
