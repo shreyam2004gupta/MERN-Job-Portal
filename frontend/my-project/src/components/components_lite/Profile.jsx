@@ -9,7 +9,7 @@ import {useState} from 'react';
 import EditProfile from "./EditProfile";
 import { useSelector } from 'react-redux';
 
-const skills=["react","html","js","nodejs","mongodb"];
+// const skills=["react","html","js","nodejs","mongodb"];
 const isResume = true;
 const Profile = () => {
   const[open,opened]=useState(false);
@@ -40,16 +40,16 @@ const Profile = () => {
         </div>
         <div className="my-5">
           <Mail />
-          <span>shreyamgupta123@gmail.com</span>
+          <span><a href={`mailto:${user?.email}`}>{user?.email}</a></span>
           <Contact />
-          <span>+91 5647259257</span>
+          <span><a href={`tel:${user?.phoneNumber}`}>{user?.phoneNumber}</a></span>
         </div>
 
         <div>
           <div>
             <h1 className='font-bold'>Skills</h1>
-            {skills.length !== 0 ? (
-              skills.map((items, index) => 
+            {user?.profile?.skills.length !== 0 ? (
+              user?.profile?.skills.map((items, index) => 
                 <Badge key={index}>{items}</Badge>
               )
             ) : (
@@ -64,12 +64,12 @@ const Profile = () => {
                   target="_blank"
                   href="https://in.linkedin.com/in/shreyam-gupta-2b6858279"
                   download="resume.pdf"
-                  className="bg-blue-500 rounded-2xl hover:bg-gray-400 cursor-pointer"
+                  className="bg-blue-500 rounded-3xl hover:bg-gray-400 cursor-pointer"
                 >
                   Download Resume
                 </a>
               ) : (
-                <span>no</span>
+                <span className='text-red-500'>Not Found !</span>
               )}
             </div>
           </div>

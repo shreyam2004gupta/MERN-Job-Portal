@@ -134,6 +134,8 @@ export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
+    console.log(fullname, email, phoneNumber, bio, skills);
+
     let skillsArray;
     if (skills) {
       const skillsArray = skills.split(",");
@@ -159,7 +161,7 @@ export const updateProfile = async (req, res) => {
     if (bio) {
       user.profile.bio = bio;
     }
-    if (skills) {
+    if (skillsArray) {
       user.profile.skills = skillsArray;
     }
 
@@ -169,7 +171,7 @@ export const updateProfile = async (req, res) => {
       _id: user._id,
       fullname: user.fullname,
       email: user.email,
-      phonenumber: user.phoneNumber,
+      phoneNumber: user.phoneNumber,
       role: user.role,
       profile: user.profile,
     };

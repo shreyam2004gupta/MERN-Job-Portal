@@ -19,9 +19,9 @@ function EditProfile({ open, opened }) {
   const [loading, setloading] = useState(false);
   const { user } = useSelector((store) => store.auth);
   const [input, setInput] = useState({
-    name: user?.fullname,
+    fullname: user?.fullname,
     email: user?.email,
-    phone: user?.phoneNumber,
+    phoneNumber: user?.phoneNumber,
     bio: user?.bio,
     skills: user?.profile?.skills.map((skills) => skills),
     file: user?.profile?.resume,
@@ -32,9 +32,10 @@ function EditProfile({ open, opened }) {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   const handlerFileChange = async (e) => {
+    e.preventDefault();
     const formData = new FormData();
     formData.append("name", input.fullname);
-    formData.append("email".input.email);
+    formData.append("email",input.email);
     formData.append("phone", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
@@ -79,7 +80,7 @@ function EditProfile({ open, opened }) {
                   <input
                     type="text"
                     id="name"
-                    value={input.name}
+                    value={input.fullname}
                     onChange={changeEventHandler}
                     name="name"
                     className="w-full border border-gray-700 rounded-2xl col-span-3" />
