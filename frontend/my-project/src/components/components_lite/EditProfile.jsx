@@ -23,7 +23,7 @@ function EditProfile({ open, opened }) {
     email: user?.email,
     phoneNumber: user?.phoneNumber,
     bio: user?.bio,
-    skills: user?.profile?.skills.map((skills) => skills),
+    skills: user?.profile?.skills?.map((skills) => skills),
     file: user?.profile?.resume,
   });
    const dispatch= useDispatch();
