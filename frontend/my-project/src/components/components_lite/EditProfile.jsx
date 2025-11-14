@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
-import { Label } from '@radix-ui/react-label';
-import { useDispatch, useSelector } from 'react-redux';
-import { USER_API_ENDPOINT } from '@/utils/data';
+import { Label } from "@radix-ui/react-label";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_API_ENDPOINT } from "@/utils/data";
 import axios from "axios";
-import { toast } from 'sonner';
-import { setUser } from '@/Redux/authslice';
+import { toast } from "sonner";
+import { setUser } from "@/Redux/authslice";
 
 function EditProfile({ open, opened }) {
   const [loading, setloading] = useState(false);
@@ -23,11 +23,11 @@ function EditProfile({ open, opened }) {
     email: user?.email,
     phoneNumber: user?.phoneNumber,
     bio: user?.bio,
-    skills: user?.profile?.skills?.map((skills) => skills),
+    skills: user?.profile?.skills?.join(", ") || "",
     file: user?.profile?.resume,
   });
-   const dispatch= useDispatch();
-   
+  const dispatch = useDispatch();
+
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -35,7 +35,7 @@ function EditProfile({ open, opened }) {
     e.preventDefault();
     const formData = new FormData();
     formData.append("name", input.fullname);
-    formData.append("email",input.email);
+    formData.append("email", input.email);
     formData.append("phone", input.phoneNumber);
     formData.append("bio", input.bio);
     formData.append("skills", input.skills);
@@ -43,26 +43,31 @@ function EditProfile({ open, opened }) {
       formData.append("file", input.file);
     }
     try {
-      const res = await axios.post(`${USER_API_ENDPOINT}/profile/update`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
-      if(res.data.success){
-        dispatch(setUser(res.data.user));
+      const res = await axios.post(
+        `${USER_API_ENDPOINT}/profile/update`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+      if (res.data.success) {
+        dispatch(setUser({ ...res.data.user, skills: input.skills }));
         toast.success(res.data.message);
       }
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
       toast.error("Failed to Upload");
+    } finally {
+      setloading(false);
     }
     opened(false);
     console.log(input);
   };
   const FileChangeHandler = (e) => {
-    const file = e.target.file?.[0];
+    const file = e.target.files?.[0];
     setInput({ ...input, file });
   };
   return (
@@ -83,7 +88,8 @@ function EditProfile({ open, opened }) {
                     value={input.fullname}
                     onChange={changeEventHandler}
                     name="name"
-                    className="w-full border border-gray-700 rounded-2xl col-span-3" />
+                    className="w-full border border-gray-700 rounded-2xl col-span-3"
+                  />
                 </div>
               </div>
               <div className="grid gap-4 py-4">
@@ -97,7 +103,8 @@ function EditProfile({ open, opened }) {
                     name="email"
                     value={input.email}
                     onChange={changeEventHandler}
-                    className="w-full border border-gray-700 rounded-2xl col-span-3" />
+                    className="w-full border border-gray-700 rounded-2xl col-span-3"
+                  />
                 </div>
 
                 <div className="grid  gap-4 py-4">
@@ -111,7 +118,8 @@ function EditProfile({ open, opened }) {
                       value={input.phoneNumber}
                       onChange={changeEventHandler}
                       name="phone"
-                      className="w-full border border-gray-700 rounded-2xl col-span-3" />
+                      className="w-full border border-gray-700 rounded-2xl col-span-3"
+                    />
                   </div>
                 </div>
                 <div className="grid gap-4 py-4">
@@ -125,7 +133,8 @@ function EditProfile({ open, opened }) {
                       onChange={changeEventHandler}
                       id="bio"
                       name="bio"
-                      className="w-full border border-gray-700 rounded-2xl col-span-3" />
+                      className="w-full border border-gray-700 rounded-2xl col-span-3"
+                    />
                   </div>
                   <div>
                     <div className="grid grid-cols-4 items-center gap-4">
@@ -138,7 +147,8 @@ function EditProfile({ open, opened }) {
                         onChange={changeEventHandler}
                         name="skills"
                         value={input.skills}
-                        className="w-full border border-gray-700 rounded-2xl col-span-3" />
+                        className="w-full border border-gray-700 rounded-2xl col-span-3"
+                      />
                     </div>
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
@@ -151,7 +161,8 @@ function EditProfile({ open, opened }) {
                       name="file"
                       accept="application/pdf"
                       onChange={FileChangeHandler}
-                      className="col-span-3 border border-gray-300 rounded-md p-2 bg-blue-600 " />
+                      className="col-span-3 border border-gray-300 rounded-md p-2 bg-blue-600 "
+                    />
                   </div>
                 </div>
               </div>
@@ -176,4 +187,4 @@ function EditProfile({ open, opened }) {
   );
 }
 
-export default EditProfile
+export default EditProfile;

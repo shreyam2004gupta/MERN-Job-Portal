@@ -1,6 +1,8 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloud.js";
 
 export const register = async (req, res) => {
   try {
@@ -14,6 +16,15 @@ export const register = async (req, res) => {
         success: false,
       });
     }
+    const file = req.file;
+    let cloudeResponse = null;
+    if (file) {
+      const fileUri = getDataUri(file);
+      if (fileUri && fileUri.content) {
+        cloudeResponse = await cloudinary.uploader.upload(fileUri.content);
+      }
+    }
+
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -29,6 +40,9 @@ export const register = async (req, res) => {
       phoneNumber,
       password: hashedPassword,
       role,
+      profile: {
+        profilePhoto: cloudeResponse ? cloudeResponse.secure_url : undefined,
+      },
     });
 
     await newUser.save();
@@ -135,10 +149,18 @@ export const updateProfile = async (req, res) => {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
     const file = req.file;
     console.log(fullname, email, phoneNumber, bio, skills);
+    let cloudinaryRes = null;
+    if (file) {
+      const fileUri = getDataUri(file);
 
-    let skillsArray;
+      if (fileUri && fileUri.content) {
+        cloudinaryRes = await cloudinary.uploader.upload(fileUri.content);
+      }
+    }
+
+    let skillsArray = null;
     if (skills) {
-      const skillsArray = skills.split(",");
+      skillsArray = skills.split(",").map((skill) => skill.trim());
     }
     const userId = req.id;
     let user = await User.findById(userId);
@@ -164,7 +186,10 @@ export const updateProfile = async (req, res) => {
     if (skillsArray) {
       user.profile.skills = skillsArray;
     }
-
+    if (cloudinaryRes) {
+      user.profile.resume = cloudinaryRes.secure_url;
+      user.profile.resumeOriginalname = file.originalname;
+    }
     await user.save();
 
     user = {

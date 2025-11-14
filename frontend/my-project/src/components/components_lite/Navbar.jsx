@@ -4,11 +4,32 @@ import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { User2, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Home from "./Home";
+import { USER_API_ENDPOINT } from "@/utils/data";
+import axios from "axios";
+import { setUser } from "@/Redux/authslice";
 const Navbar = () => {
   
   const {user}=useSelector((store)=>store.auth);
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const logouthandler = async () => {
+    try {
+      const resp = await axios.post(`${USER_API_ENDPOINT}/logout`, null, {
+        withCredentials: true,
+      });
+      if (resp.data && resp.data.success) {
+        dispatch(setUser(null));
+        navigate("/");
+      } else {
+        console.error("failed to logout");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w7xl h-16">
@@ -66,7 +87,7 @@ const Navbar = () => {
                 </div>
                 <div className="cursor-pointer flex">
                   <LogOut></LogOut>
-                  <Button variant="links">Logout</Button>
+                  <Button onClick={logouthandler} variant="links">Logout</Button>
                 </div>
               </PopoverContent>
             </Popover>
