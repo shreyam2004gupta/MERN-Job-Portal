@@ -76,7 +76,10 @@ const Navbar = () => {
                     />
                   </Avatar>
                   <div>
-                    <h3 className="font-medium">Shreyam Gupta</h3>
+                    <h3 className="font-medium">{user?.fullname}</h3>
+                    <p className="text-sm text-muted-foreground">
+                      {user?.profile?.bio}
+                    </p>
                   </div>
                 </div>
                 <div className="cursor-pointer flex">
@@ -87,7 +90,9 @@ const Navbar = () => {
                 </div>
                 <div className="cursor-pointer flex">
                   <LogOut></LogOut>
-                  <Button onClick={logouthandler} variant="links">Logout</Button>
+                  <Button onClick={logouthandler} variant="links">
+                    Logout
+                  </Button>
                 </div>
               </PopoverContent>
             </Popover>
