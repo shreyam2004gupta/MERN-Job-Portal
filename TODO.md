@@ -1,2 +1,2 @@
-- [x] Edit Filter.jsx to fix syntax errors: add returns in map, add key props, associate labels properly, remove unused index.
-- [x] Run the frontend to test the Filter component renders without errors and filters work.
+- [x] Fix the condition in getalljobs function to check if jobs.length === 0 instead of !jobs
+- [x] Fix the condition in getadmin function to check if jobs.length === 0 instead of !jobs

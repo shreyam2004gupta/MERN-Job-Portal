@@ -3,6 +3,7 @@ const companySchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique:true,
   },
   description: {
     type: String,
@@ -17,13 +18,11 @@ const companySchema = new mongoose.Schema({
   logo: {
     type: String,
   },
-  userId: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-  ],
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 }
 ,{
     timestamps:true,
