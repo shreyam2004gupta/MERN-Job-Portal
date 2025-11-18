@@ -40,9 +40,18 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-5">
           <ul className="flex font-medium items-center gap-6">
-            <Link to={"/Home"}>Home</Link>
-            <Link to={"/Browse"}>Browse</Link>
-            <Link to={"/Jobs"}>Jobs</Link>
+            {user && user.role === `Recruiter` ? (
+              <>
+                <Link to={"/admin/companies"}>Companies</Link>
+                <Link to={"/admin/jobs"}>Jobs</Link>
+              </>
+            ) : (
+              <>
+                <Link to={"/Home"}>Home</Link>
+                <Link to={"/Browse"}>Browse</Link>
+                <Link to={"/Jobs"}>Jobs</Link>
+              </>
+            )}
           </ul>
           {!user ? (
             <div className="flex items-center gap-2">
@@ -82,12 +91,15 @@ const Navbar = () => {
                     </p>
                   </div>
                 </div>
-                <div className="cursor-pointer flex">
-                  <User2></User2>
-                  <Button variant="links">
-                    <Link to="/Profile">View Profile</Link>
-                  </Button>
-                </div>
+                {user && user.role === `Student` && (
+                  <div className="cursor-pointer flex">
+                    <User2></User2>
+                    <Button variant="links">
+                      <Link to="/Profile">View Profile</Link>
+                    </Button>
+                  </div>
+                )}
+
                 <div className="cursor-pointer flex">
                   <LogOut></LogOut>
                   <Button onClick={logouthandler} variant="links">

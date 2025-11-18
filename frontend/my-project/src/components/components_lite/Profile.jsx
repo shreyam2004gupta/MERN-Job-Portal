@@ -23,7 +23,7 @@ const Profile = () => {
             <Avatar className="cursor-pointer h-24 w-24">
               <AvatarImage
                 className="h-20"
-                src={user?.profile?.profilePhoto || "https://i.pinimg.com/736x/2d/95/e5/2d95e5886fc4c65a6778b5fee94a7d59.jpg"}
+                src={ "https://i.pinimg.com/736x/2d/95/e5/2d95e5886fc4c65a6778b5fee94a7d59.jpg"}
                 alt="@shadcn"
               />
             </Avatar>

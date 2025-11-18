@@ -1,37 +1,40 @@
-import React from 'react';
-import {Badge} from "../ui/badge";
-const JobCarts = () => {
+import React from "react";
+import { Badge } from "../ui/badge";
+import Jobs from "./Jobs";
+
+const JobCarts = ({ job }) => {
+  console.log(job);
+
   return (
     <div className="p-5 rounded-md shadow-xl bg-white boreder-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400">
       <div>
-        <h1 className='text-lg font-medium'>Company Name</h1>
-        <p className='text-sm text-gray-400'>INDIA</p>
+        <h1 className="text-lg font-medium">
+          {job.company?.name || "Company Name"}
+        </h1>
+        <p className="text-sm text-gray-400">INDIA</p>
       </div>
       <div>
-        <h2 className="font-bold text-lg my-2">Job</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aspernatur
-          quod vitae inventore cupiditate dolores libero sapiente rerum odit
-          dolor at quasi, porro iusto vero perspiciatis repudiandae hic ratione
-          est velit ipsam nesciunt.
-        </p>
+        <h2 className="font-bold text-lg my-2">{job.title}</h2>
+        <p>{job.description}</p>
       </div>
       <div className="flex gap-2 items-center mt-4">
         <Badge variant={"ghost"}>
-          <span className={"text-blue-400 hover:text-black"}>10 Position</span>
+          <span className={"text-blue-400 hover:text-black"}>
+            {job.position}
+          </span>
         </Badge>
         <Badge className={"text-purple-400 hover:text-black"} variant={"ghost"}>
-          20 lpa
+          {job.salary}
         </Badge>
         <Badge className={"text-red-400 hover:text-black"} variant={"ghost"}>
-          Full-Time
+          {job.location}
         </Badge>
         <Badge className={"text-gray-400 hover:text-black"} variant={"ghost"}>
-          Freelancing
+          {job.jobType}
         </Badge>
       </div>
     </div>
   );
-}
+};
 
-export default JobCarts
+export default JobCarts;
