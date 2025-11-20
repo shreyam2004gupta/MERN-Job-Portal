@@ -87,19 +87,26 @@ export const getcompany = async (req, res) => {
 
 export const upadtecompany = async (req, res) => {
   try {
+    const { id } = req.params;
+    if (!id || id === 'undefined') {
+      return res.status(400).json({
+        message: "Invalid company ID",
+        success: false,
+      });
+    }
     const { name, description, website, location } = req.body;
     const file = req.file;
 
     const updateData = { name, description, website, location };
 
-    const companyname = await Company.findByIdAndUpdate(
-      req.params._id,
+    const company = await Company.findByIdAndUpdate(
+      id,
       updateData,
       {
         new: true,
       }
     );
-    if (!companyname) {
+    if (!company) {
       return res.status(404).json({
         message: "company not found",
         success: false,

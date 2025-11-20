@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Navbar from "../components_lite/Navbar";
 import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -10,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 const Companyset = () => {
+  const singlecompany = useSelector((store) => store.company);
   const [input, setinput] = useState({
     name: "",
     description: "",
@@ -41,7 +43,7 @@ const Companyset = () => {
     try {
       setloading(true);
       const res = await axios.put(
-        `${APPLICANTS_API_COMPANY}/update/${params._id}`,
+        `${APPLICANTS_API_COMPANY}/update/${params.id}`,
         formdata,
         {
           headers: {
@@ -63,6 +65,17 @@ const Companyset = () => {
       setloading(false);
     }
   };
+
+useEffect(() => {
+  setinput({
+    name: singlecompany?.name || "",
+    description: singlecompany?.description || "",
+    website: singlecompany?.website || "",
+    location: singlecompany?.location || "",
+    file: null,
+  });
+}, [singlecompany]);
+
 
   return (
     <div>

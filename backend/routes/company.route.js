@@ -1,5 +1,6 @@
 import express from "express";
-import authenticateToken from "../Middleware/isAuthenticated.js";
+import isAuthenticated from "../Middleware/isAuthenticated.js";
+import { singleUpload } from "../Middleware/multer.js";
 import {
   getAllCompanies,
   getcompany,
@@ -9,9 +10,9 @@ import {
 
 const router = express.Router();
 
-router.route("/register").post(authenticateToken, registerCompany);
-router.route("/get").get(authenticateToken, getAllCompanies);
-router.route("/get/:id").get(authenticateToken, getcompany);
-router.route("/update/:id").put(authenticateToken, upadtecompany);
+router.route("/register").post(isAuthenticated, registerCompany);
+router.route("/get").get(isAuthenticated, getAllCompanies);
+router.route("/get/:id").get(isAuthenticated, getcompany);
+router.route("/update/:id").put(isAuthenticated, singleUpload, upadtecompany);
 
 export default router;
