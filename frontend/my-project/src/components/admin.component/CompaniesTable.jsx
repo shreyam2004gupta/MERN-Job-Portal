@@ -15,12 +15,16 @@ import {
   PopoverTrigger,
 } from "@radix-ui/react-popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
 
 const CompaniesTable = () => {
+  const companyState= useSelector((store) => store.company );
+  const{companies =[]} =companyState || {};
   return (
     <div>
       <Table>
         <TableCaption>Your recent registered companies</TableCaption>
+
         <TableHeader>
           <TableRow>
             <TableHead>Logo</TableHead>
@@ -30,32 +34,47 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell>
-              <Avatar>
-                <AvatarImage
-                  className="w-9 h-9 rounded-2xl"
-                  src="https://i.pinimg.com/736x/2d/95/e5/2d95e5886fc4c65a6778b5fee94a7d59.jpg"
-                  alt="company logo"
-                />
-              </Avatar>
-            </TableCell>
-            <TableCell>Google</TableCell>
-            <TableCell>23-10-2025</TableCell>
-            <TableCell>
-              <Popover>
-                <PopoverTrigger>
-                  <MoreHorizontal />
-                </PopoverTrigger>
-                <PopoverContent className="w-30">
-                  <div className="flex items-center">
-                    <Edit2 />
-                    <span>Edit</span>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </TableCell>
-          </TableRow>
+          {companies.length === 0 && (
+            <TableRow>
+              <TableCell colSpan={4} className="text-center">
+                NO Companies
+              </TableCell>
+            </TableRow>
+          )}
+          {companies.length > 0 &&
+            companies?.map((company) => (
+              <TableRow key={company._id}>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage
+                      className="w-9 h-9 rounded-2xl"
+                      src={company.logo || "default-logo-url"}
+                      alt={`${company.name} logo`}
+                    />
+                  </Avatar>
+                </TableCell>
+
+                <TableCell>{company.name}</TableCell>
+
+                <TableCell>
+                  {company.createdAt?.split("T")[0] || "N/A"}
+                </TableCell>
+
+                <TableCell>
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontal />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-30">
+                      <div className="flex items-center gap-2">
+                        <Edit2 size={16} />
+                        <span>Edit</span>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>

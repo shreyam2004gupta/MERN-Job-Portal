@@ -1,4 +1,7 @@
 import { Company } from "../models/company.model.js";
+import getDataUri from "../utils/datauri.js";
+import cloudinary from "../utils/cloud.js";
+
 export const registerCompany = async (req, res) => {
   try {
     const { companyname, description } = req.body;
@@ -65,8 +68,14 @@ export const getAllCompanies = async (req, res) => {
 export const getcompany = async (req, res) => {
   try {
     const companyId = req.params.id;
+    if(!companyId || companyId ==="undefined"){
+      return res.status(400).json({
+        message:"company id missing",
+        success:false,
+      })
+    }
     const company = await Company.findById(companyId);
-    if (!company) {
+    if (!company ) {
       return res.status(404).json({
         message: "company not found",
         success: false,
@@ -78,6 +87,12 @@ export const getcompany = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+    if(error.name==="CastError"){
+      return res.status(400).json({
+        message:"invalid company id format",
+        success:false,
+      });
+    }
     return res.status(500).json({
       message: "server error",
       success: false,
@@ -96,15 +111,27 @@ export const upadtecompany = async (req, res) => {
     }
     const { name, description, website, location } = req.body;
     const file = req.file;
-
+    let logo =req.body.logo;
+     if(file){
+        const fileUri = getDataUri(file);
+       const cloudinaryResponse = await cloudinary.uploader.upload(
+         fileUri.content
+       );
+        logo = cloudinaryResponse.secure_url;
+     }
+    
     const updateData = { name, description, website, location };
-
+      if(logo){
+        updateData.logo=logo;
+      }
+     
     const company = await Company.findByIdAndUpdate(
       id,
       updateData,
       {
         new: true,
       }
+    
     );
     if (!company) {
       return res.status(404).json({
@@ -116,7 +143,8 @@ export const upadtecompany = async (req, res) => {
       message: "company updated",
       success: true,
     });
-  } catch (error) {
+  
+ } catch (error) {
     console.error(error);
     return res.status(500).json({
       message: "server error",
