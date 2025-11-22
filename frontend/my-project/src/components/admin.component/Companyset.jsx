@@ -9,8 +9,11 @@ import axios from "axios";
 import { APPLICANTS_API_COMPANY } from "@/utils/data";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import usegetcompany from "@/hooks/usegetcompany";
 
 const Companyset = () => {
+  const params=useParams();
+  usegetcompany(params._id);
   const singlecompany = useSelector((store) => store.company);
   const [input, setinput] = useState({
     name: "",
@@ -21,7 +24,6 @@ const Companyset = () => {
   });
   const navigate = useNavigate();
   const [loading, setloading] = useState(false);
-  const params = useParams();
   const changeeventHandler = (event) => {
     setinput({ ...input, [event.target.name]: event.target.value });
   };

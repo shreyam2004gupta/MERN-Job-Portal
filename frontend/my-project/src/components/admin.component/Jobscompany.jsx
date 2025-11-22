@@ -2,15 +2,16 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components_lite/Navbar";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import CompaniesTable from "./companiesTable";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setSearchCompanyByText } from "@/Redux/companyslice";
-import usegetcompany from "@/hooks/usegetcompany";
+import AdminJobTable from "./AdminJobTable";
+import useadminjob from "@/hooks/useadminjob";
 
-const Companies = () => {
+const Jobscompany = () => {
+  useadminjob();
   const navigate = useNavigate();
-  usegetcompany();
+ 
   const [input,setinput]=useState("");
   const dispatch=useDispatch();
   useEffect(()=>{
@@ -27,16 +28,15 @@ const Companies = () => {
             onChange={(e) => setinput((e.target.value))}
           ></Input>
           <Button onClick={() => navigate("/admin/companies/create")}>
-            {" "}
-            New Company
+            Post New Job
           </Button>
         </div>
         <div>
-          <CompaniesTable />
+          <AdminJobTable />
         </div>
       </div>
     </div>
   );
 };
 
-export default Companies;
+export default Jobscompany

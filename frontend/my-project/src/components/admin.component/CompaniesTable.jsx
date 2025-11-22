@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -16,10 +16,36 @@ import {
 } from "@radix-ui/react-popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
+import { setSearchCompanyByText } from "@/Redux/companyslice";
 
 const CompaniesTable = () => {
-  const companyState= useSelector((store) => store.company );
-  const{companies =[]} =companyState || {};
+  const companyState = useSelector((store) => store.company);
+  
+  const { 
+    companies = [],
+    setSearchCompanyByText: searchText = ""
+  } = companyState || {};
+
+
+  const [filter, setfilter] = useState(companies);
+  
+  useEffect(() => {
+    setfilter(companies);
+  }, [companies]);
+
+
+  useEffect(() => {
+    const filtercompany = companies.length > 0 && companies.filter((company) => {
+      if (!searchText) {
+        return true;
+      }
+      return company?.name?.toLowerCase().includes(searchText.toLowerCase());
+    });
+    setfilter(filtercompany);
+  },
+  [companies, searchText]
+  );
+
   return (
     <div>
       <Table>
@@ -34,15 +60,15 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {companies.length === 0 && (
+          {filter.length === 0 && (
             <TableRow>
               <TableCell colSpan={4} className="text-center">
                 NO Companies
               </TableCell>
             </TableRow>
           )}
-          {companies.length > 0 &&
-            companies?.map((company) => (
+          {filter.length > 0 &&
+            filter.map((company) => (
               <TableRow key={company._id}>
                 <TableCell>
                   <Avatar>
@@ -66,7 +92,7 @@ const CompaniesTable = () => {
                       <MoreHorizontal />
                     </PopoverTrigger>
                     <PopoverContent className="w-30">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2" onClick={()=>Navigate(`/admin/companies/${company._id}`)}>
                         <Edit2 size={16} />
                         <span>Edit</span>
                       </div>

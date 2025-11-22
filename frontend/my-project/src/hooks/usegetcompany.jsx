@@ -27,9 +27,9 @@ const usegetcompany = (companyId) => {
           }
         );
 
-        if (res.data.success) {
+        
           dispatch(setSingleCompany(res.data.company));
-        }
+        
       } catch (error) {
         console.error(error);
         setError(error.response?.data?.message || "An error occurred");

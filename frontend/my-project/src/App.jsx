@@ -13,6 +13,7 @@ import Description from "./components/components_lite/Description";
 import Companies from "./components/admin.component/Companies";
 import Companycreate from "./components/admin.component/Companycreate";
 import Companyset from "./components/admin.component/Companyset";
+import Jobscompany from "./components/admin.component/Jobscompany";
 
 const appRouter = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const appRouter = createBrowserRouter([
   {
     path:"/admin/companies/:id",
     element:<Companyset/>
+  },
+  {
+    path:"/admin/jobs",
+    element:<Jobscompany/>
   } 
 ]);
 const App = () => {
