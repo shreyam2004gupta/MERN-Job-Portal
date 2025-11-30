@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { useParams } from "react-router-dom";
-// import usegetjob from "@/hooks/usegetjob";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setSingleJob } from "@/Redux/jobSlice";
 import { APPLICANTS_API_ENDPOINT, JOB_API_ENDPOINT } from "@/utils/data";
 import { toast } from "sonner";
-import { setLoading } from "@/Redux/authslice";
 
 const Description = () => {
   const params = useParams();
@@ -19,8 +17,8 @@ const Description = () => {
   const { user } = useSelector((store) => store.auth);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [isApplied, setisapplied] = useState(false);
-
+  const isInitialApplied = singleJob?.application?.some((application)=>application.applicant === user?._id)||false;
+  const [isApplied, setisapplied] = useState(isInitialApplied);
   const applyjob = async () => {
     try {
       const res = await axios.get(`${APPLICANTS_API_ENDPOINT}/apply/${jobId}`, {
@@ -33,7 +31,6 @@ const Description = () => {
           applications: [...singleJob.applications, { applicant: user?._id }],
         };
         dispatch(setSingleJob(updatejob));
-        setisapplied(res.data.job.applications.some(application=>APPLICANTS_API_ENDPOINT.applicant === user?._id))
         console.log(res.data);
         toast.success(res.data.message || "Applied successfully");
       }
