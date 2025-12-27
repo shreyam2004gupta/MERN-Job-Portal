@@ -17,7 +17,7 @@ const Appliedjob = () => {
         <TableBody>
           {[1, 2, 3, 4, 5].map((item, index) => (
             <TableRow key={index}>
-              <TableCell>23-12-2024</TableCell>
+              <TableCell>23-12-2025</TableCell>
               <TableCell>Software Engineer</TableCell>
               <TableCell>Microsoft</TableCell>
               <TableCell>

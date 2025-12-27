@@ -17,7 +17,10 @@ const Description = () => {
   const { user } = useSelector((store) => store.auth);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const isInitialApplied = singleJob?.application?.some((application)=>application.applicant === user?._id)||false;
+  const isInitialApplied =
+    singleJob?.application?.some(
+      (application) => application.applicant === user?._id
+    ) || false;
   const [isApplied, setisapplied] = useState(isInitialApplied);
   const applyjob = async () => {
     try {
@@ -47,28 +50,27 @@ const Description = () => {
         const res = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`, {
           withCredentials: true,
         });
-        console.log("Api response",res.data);
+        console.log("Api response", res.data);
         if (res.data.success) {
-          dispatch(setSingleJob(res.data.jobs));
+          dispatch(setSingleJob(res.data.job));
           setisapplied(
-            res.data.job.applications.some((application) => application.applicant === user?._id)
+            res.data.job.applications.some(
+              (application) => application.applicant === user?._id
+            )
           );
-        }
-        else{
+        } else {
           setError("failed to fetch job");
         }
       } catch (error) {
         console.log(error);
         setError(error.message || "an error occured");
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
     fetchSingleJobs();
   }, [jobId, dispatch, user?._id]);
   console.log("single job", singleJob);
-
- 
 
   return (
     <div>
@@ -117,7 +119,6 @@ const Description = () => {
             </Button>
           </div>
         </div>
-
         <h1 className="border-b-3 border-b-black ">{singleJob?.description}</h1>
       </div>
       <div className="max-w-7xl mx-auto my-10">
@@ -140,7 +141,7 @@ const Description = () => {
         <h1>
           Post:
           <span className="pl-4 font-normal ">
-            {singleJob?.createdAt.split("T")[0]}
+            {singleJob?.createdAt?.split("T")[0]}
           </span>
         </h1>
       </div>

@@ -43,6 +43,7 @@ function EditProfile({ open, opened }) {
       formData.append("file", input.file);
     }
     try {
+      setloading(true);
       const res = await axios.post(
         `${USER_API_ENDPOINT}/profile/update`,
         formData,

@@ -1,4 +1,0 @@
-- [ ] Modify backend/controllers/user.controller.js to set cookie with sameSite: "None" and secure: false
-- [ ] Update backend/routes/company.route.js to add singleUpload middleware and rename upadtecompany to updatecompany
-- [ ] Update backend/controllers/company.controller.js to add imports for multer, cloudinary, datauri; fix logic to handle file upload, verify ownership, return updated company; rename function
-- [ ] Test the company update functionality

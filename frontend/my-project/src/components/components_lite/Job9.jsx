@@ -9,18 +9,32 @@ const Job9 = ({ job }) => {
   const navigate = useNavigate();
 
   const dayAgo = (mongodbTime) => {
+    if (!mongodbTime) {
+      return null; 
+    }
+    
     const createdAt = new Date(mongodbTime);
+
+    if (isNaN(createdAt.getTime())) {
+      return null;
+    }
+
     const currentDate = new Date();
     const timediff = currentDate - createdAt;
     return Math.floor(timediff / (1000 * 3600 * 24));
   };
+
+  const daysSincePosted = dayAgo(job?.createdAt);
+
   return (
     <div className="p-5 rounded-md shadow-xl bg-white boreder-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400">
       <div className="flex items-center justify-between">
         <p>
-          {dayAgo(job?.createdAt) === 0
+          {daysSincePosted === null
+            ? "Date N/A" 
+            : daysSincePosted === 0
             ? "Today"
-            : `${dayAgo(job?.createdAt)} days ago`}
+            : `${daysSincePosted} days ago`}
         </p>
         <Button variant="ouline" className="rounded-full" size="icon">
           <Bookmark />

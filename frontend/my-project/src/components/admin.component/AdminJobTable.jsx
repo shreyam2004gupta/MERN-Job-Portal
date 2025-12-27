@@ -62,7 +62,7 @@ const AdminJobsTable = () => {
 
         <TableBody>
           {Array.isArray(filterJobs) && filterJobs.length === 0 ? (
-            // FIX: Wrap the span inside a TableRow and TableCell
+           
             <TableRow>
               <TableCell colSpan={4} className="text-center">
                 No Job Added
