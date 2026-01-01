@@ -81,6 +81,11 @@ const AdminJobTable = () => {
                         <Edit2 size={16} />
                         <span>Edit</span>
                       </div>
+                      <hr />
+                      <div onClick={()=> navigate(`/admin/jobs/${jobs._id}/applicants`)} className="flex items-center gap-2 w-fit cursor-pointer">
+                        <Eye></Eye>
+                        <span>Application</span>
+                      </div>
                     </PopoverContent>
                   </Popover>
                 </TableCell>
