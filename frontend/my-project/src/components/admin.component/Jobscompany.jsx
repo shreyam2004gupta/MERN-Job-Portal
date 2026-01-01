@@ -27,9 +27,9 @@ const Jobscompany = () => {
             placeholder="Filter by name"
             onChange={(e) => setinput(e.target.value)}
           ></Input>
-          <Button onClick={() => navigate("/admin/companies/create")}>
+          <Button onClick={() => navigate("/admin/jobs/create")}>
             {" "}
-            New Company
+            New Job
           </Button>
         </div>
         <div>

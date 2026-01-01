@@ -20,9 +20,6 @@ import { useNavigate } from "react-router-dom";
 
 const AdminJobTable = () => {
   const navigate = useNavigate();
-  const { companies, searchCompanyByText } = useSelector(
-    (store) => store.company
-  );
   const { allAdminJobs, searchJobByText } = useSelector((store) => store.jobs);
   const [filterJobs, setfilterjobs] = useState(allAdminJobs);
 

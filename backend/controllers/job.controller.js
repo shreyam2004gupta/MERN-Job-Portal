@@ -127,7 +127,7 @@ export const getadmin = async (req, res) => {
     }
     return res.status(200).json({
       jobs,
-      status: true,
+      success: true,
     });
   } catch(error) {
     console.error(error);
