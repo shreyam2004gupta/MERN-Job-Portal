@@ -1,5 +1,5 @@
 import React from "react";
-import {RadioGroup, RadioGroupItem} from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 
 const filterData = [
   {
@@ -48,7 +48,7 @@ const Filter = () => {
       <hr className="mt-3" />
       <RadioGroup>
         {filterData.map((data, index) => (
-          <div>
+          <div key={index}>
             <h2>{data.filterType}</h2>
             {data.array.map((item, idx) => (
               <div className="flex items-center" key={item}>

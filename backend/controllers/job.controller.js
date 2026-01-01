@@ -129,7 +129,7 @@ export const getadmin = async (req, res) => {
       jobs,
       status: true,
     });
-  } catch {
+  } catch(error) {
     console.error(error);
     return res.status(500).json({
       message: "server error",

@@ -11,10 +11,9 @@ import { USER_API_ENDPOINT } from "@/utils/data";
 import axios from "axios";
 import { setUser } from "@/Redux/authslice";
 const Navbar = () => {
-  
-  const {user}=useSelector((store)=>store.auth);
-  const dispatch=useDispatch();
-  const navigate=useNavigate();
+  const { user } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const logouthandler = async () => {
     try {
       const resp = await axios.post(`${USER_API_ENDPOINT}/logout`, null, {
@@ -29,7 +28,7 @@ const Navbar = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w7xl h-16">

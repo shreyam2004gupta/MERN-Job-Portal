@@ -12,9 +12,11 @@ import { toast } from "sonner";
 import usegetcompany from "@/hooks/usegetcompany";
 
 const Companyset = () => {
-  const params=useParams();
-  usegetcompany(params._id);
-  const singlecompany = useSelector((store) => store.company);
+  const params = useParams();
+  const { loading: companyLoading, error: companyError } = usegetcompany(
+    params.id
+  );
+  const { singleCompany } = useSelector((store) => store.company);
   const [input, setinput] = useState({
     name: "",
     description: "",
@@ -68,16 +70,23 @@ const Companyset = () => {
     }
   };
 
-useEffect(() => {
-  setinput({
-    name: singlecompany?.name || "",
-    description: singlecompany?.description || "",
-    website: singlecompany?.website || "",
-    location: singlecompany?.location || "",
-    file: null,
-  });
-}, [singlecompany]);
+  useEffect(() => {
+    setinput({
+      name: singleCompany?.name || "",
+      description: singleCompany?.description || "",
+      website: singleCompany?.website || "",
+      location: singleCompany?.location || "",
+      file: null,
+    });
+  }, [singleCompany]);
 
+  if (companyLoading) {
+    return <div>Loading company details...</div>;
+  }
+
+  if (companyError) {
+    return <div>Error loading company: {companyError}</div>;
+  }
 
   return (
     <div>

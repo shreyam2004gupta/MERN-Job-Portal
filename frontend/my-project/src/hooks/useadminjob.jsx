@@ -18,6 +18,8 @@ const useadminjob = () => {
         });
         if (res.data.success) {
           dispatch(setAllAdmin(res.data.jobs));
+        }else{
+          setError("failed");
         }
       } catch (error) {
         console.log(error);

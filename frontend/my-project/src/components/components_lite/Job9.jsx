@@ -6,43 +6,27 @@ import { Badge } from "../ui/badge";
 import { useNavigate } from "react-router-dom";
 
 const Job9 = ({ job }) => {
+  console.log("Job object:", job);
   const navigate = useNavigate();
 
   const dayAgo = (mongodbTime) => {
-    if (!mongodbTime) {
-      return null; 
-    }
-    
     const createdAt = new Date(mongodbTime);
-
-    if (isNaN(createdAt.getTime())) {
-      return null;
-    }
-
-    const currentDate = new Date();
-    const timediff = currentDate - createdAt;
-    return Math.floor(timediff / (1000 * 3600 * 24));
+    const currentTime = new Date();
+    const timediff = currentTime - createdAt;
+    return Math.floor(timediff / (1000 * 60 * 60 * 24));
   };
 
-  const daysSincePosted = dayAgo(job?.createdAt);
-
   return (
-    <div className="p-5 rounded-md shadow-xl bg-white boreder-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400">
+    <div className="p-5 rounded-md shadow-xl bg-white border-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400">
       <div className="flex items-center justify-between">
-        <p>
-          {daysSincePosted === null
-            ? "Date N/A" 
-            : daysSincePosted === 0
-            ? "Today"
-            : `${daysSincePosted} days ago`}
-        </p>
-        <Button variant="ouline" className="rounded-full" size="icon">
+        <p className="text-gray-400 text-sm">{dayAgo(job.createdAt) ===0 ? "Today" :`${dayAgo(job.createdAt)} days Ago`}</p>
+        <Button variant="outline" className="rounded-full" size="icon">
           <Bookmark />
         </Button>
       </div>
 
       <div className="flex items-center gap-2 my-2">
-        <Button className="p-6" variant="ouline" size="icons">
+        <Button className="p-6" variant="outline" size="icon">
           <Avatar>
             <AvatarImage src={job?.company?.logo}></AvatarImage>
           </Avatar>
@@ -69,7 +53,7 @@ const Job9 = ({ job }) => {
             className={"text-purple-400 hover:text-black"}
             variant={"ghost"}
           >
-            {job?.salary}
+            {job?.salary} lpa
           </Badge>
           <Badge className={"text-red-400 hover:text-black"} variant={"ghost"}>
             {job?.location}
@@ -83,15 +67,16 @@ const Job9 = ({ job }) => {
       <div className="flex items-center gap-4">
         <Button
           className="p-6"
-          variant="ouline"
-          size="icons"
+          variant="outline"
+          size="icon"
           onClick={() => {
             navigate(`/description/${job?._id}`);
           }}
         >
           Details
         </Button>
-        <Button className="p-1 bg-purple-600" variant="ouline" size="icons">
+
+        <Button className="p-1 bg-purple-600" variant="outline">
           Save for Later
         </Button>
       </div>

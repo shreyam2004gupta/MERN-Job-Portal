@@ -68,6 +68,7 @@ export const getAllCompanies = async (req, res) => {
 export const getcompany = async (req, res) => {
   try {
     const companyId = req.params.id;
+    console.log("Backend getcompany called with companyId:", companyId);
     if(!companyId || companyId ==="undefined"){
       return res.status(400).json({
         message:"company id missing",

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const companyslice = createSlice({
   name: "company",
   initialState: {
-    singleCompany: null,
+    singleCompany: {},
     companies:[],
     searchCompanyByText:"",
   },

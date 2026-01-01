@@ -8,17 +8,17 @@ const usegetcompany = (companyId) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  console.log(res.data);
 
   useEffect(() => {
-    
+    console.log("usegetcompany called with companyId:", companyId);
     if (!companyId || companyId === "undefined") {
+      setError("Invalid company ID");
       return;
     }
-
     const fetchSingleCompany = async () => {
       setLoading(true);
       setError(null);
-
       try {
         const res = await axios.get(
           `${APPLICANTS_API_COMPANY}/get/${companyId}`,
@@ -26,10 +26,12 @@ const usegetcompany = (companyId) => {
             withCredentials: true,
           }
         );
-
-        
+        console.log("API Response:", res.data);
+        if (res.data.success) {
           dispatch(setSingleCompany(res.data.company));
-        
+        } else {
+          setError("Failed to fetch company");
+        }
       } catch (error) {
         console.error(error);
         setError(error.response?.data?.message || "An error occurred");
@@ -37,7 +39,6 @@ const usegetcompany = (companyId) => {
         setLoading(false);
       }
     };
-
     fetchSingleCompany();
   }, [companyId, dispatch]);
 

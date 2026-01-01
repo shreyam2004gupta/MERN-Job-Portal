@@ -88,7 +88,7 @@ const Description = () => {
                 className={"text-purple-400 hover:text-black"}
                 variant={"ghost"}
               >
-                {singleJob?.salary}lpa
+                {singleJob?.salary} lpa
               </Badge>
               <Badge
                 className={"text-red-400 hover:text-black"}
@@ -130,7 +130,7 @@ const Description = () => {
           <span className="pl-4 font-normal ">{singleJob?.location}</span>
         </h1>
         <h1>
-          Salary:<span className="pl-4 font-normal ">{singleJob?.salary}</span>
+          Salary:<span className="pl-4 font-normal ">{singleJob?.salary} lpa</span>
         </h1>
         <h1>
           Total Applicants:
