@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components_lite/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -20,7 +20,7 @@ const login = () => {
   });
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading } = useSelector((store) => store.auth);
+  const { loading,user } = useSelector((store) => store.auth);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -54,7 +54,11 @@ const login = () => {
       dispatch(setLoading(false));
     }
   };
-
+useEffect(()=>{
+  if(user){
+    Navigate("/");
+  }
+},[])
   return (
     <div>
       <Navbar></Navbar>
