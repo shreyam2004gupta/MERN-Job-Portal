@@ -60,7 +60,7 @@ const ApplicantsTable = () => {
                     <span>NA</span>
                 )}
             </TableCell>
-            
+            <TableCell>{item?.applicants?.createdAt.split("T")[0]}</TableCell>
             <TableCell className="text-right">
               <Popover>
                 <PopoverTrigger>

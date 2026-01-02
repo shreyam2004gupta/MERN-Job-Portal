@@ -1,19 +1,20 @@
 import { setAllJobs } from "@/Redux/jobSlice";
 import { JOB_API_ENDPOINT } from "@/utils/data";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const userJobs = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const {searchedQuery}= useSelector(store =>store.job);
   useEffect(() => {
     const fetchJobs = async () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get(`${JOB_API_ENDPOINT}/get`, {
+        const res = await axios.get(`${JOB_API_ENDPOINT}/get?keyword=${searchedQuery}`, {
           withCredentials: true,
         });
         if (res.data.success) {

@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import Job from "./Job9";
 import { useDispatch,useSelector } from "react-redux";
-import usegetcompany from "@/hooks/usegetcompany";
-import { setSearchJobByText } from "@/Redux/jobSlice";
+import {  setSearchQuery } from "@/Redux/jobSlice";
+import userJobs from "@/hooks/userJobs";
 
 
 const Browse = () => {
-  usegetcompany();
+  userJobs();
   const {allJobs}= useSelector((store)=>store.job);
   const dispatch =useDispatch();
   useEffect(()=>{
     return()=>{
-      dispatch(setSearchJobByText(""));
+      dispatch(setSearchQuery(""));
     };
   },[]);
   return (

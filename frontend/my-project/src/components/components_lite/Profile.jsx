@@ -8,10 +8,12 @@ import Appliedjob from './Appliedjob';
 import {useState} from 'react';
 import EditProfile from "./EditProfile";
 import { useSelector } from 'react-redux';
+import usegetallappliedjobs from '@/hooks/usegetallappliedjobs';
 
-// const skills=["react","html","js","nodejs","mongodb"];
+
 const isResume = true;
 const Profile = () => {
+  usegetallappliedjobs();
   const[open,opened]=useState(false);
   const {user}=useSelector((store)=>store.auth);
   return (

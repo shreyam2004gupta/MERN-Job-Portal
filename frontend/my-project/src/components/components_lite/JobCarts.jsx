@@ -1,12 +1,17 @@
 import React from "react";
 import { Badge } from "../ui/badge";
 import Jobs from "./Jobs";
+import { useNavigate } from "react-router-dom";
 
 const JobCarts = ({ job }) => {
   console.log(job);
+  const navigate =useNavigate();
 
   return (
-    <div className="p-5 rounded-md shadow-xl bg-white boreder-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400">
+    <div
+      onClick={() => navigate(`/description/${job._id}`)}
+      className="p-5 rounded-md shadow-xl bg-white boreder-black hover:shadow-2xl cursor-pointer hover:shadow-purple-400"
+    >
       <div>
         <h1 className="text-lg font-medium">
           {job.company?.name || "Company Name"}
