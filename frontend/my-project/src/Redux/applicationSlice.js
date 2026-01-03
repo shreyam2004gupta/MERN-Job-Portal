@@ -3,17 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const applicationSlice = createSlice({
     name :"application",
     initialState:{
-        applications:[],
+       applicants:null,
     },
     reducers:{
         setSingleApplication :(state,action)=>{
-            state.singleApplication = action.payload;
+            state.applicants = action.payload;
         }
     }
-})
+});
 
-export const {setSingleApplication} =applicationSlice.actions;
+export const {setSingleApplication} = applicationSlice.actions;
 
 export default applicationSlice.reducer;
 
-export const applicationSliceReducer =applicationSlice.reducer;
+export const applicationReducer = applicationSlice.reducer;

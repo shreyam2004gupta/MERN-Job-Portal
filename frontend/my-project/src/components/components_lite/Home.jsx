@@ -23,12 +23,12 @@ const Home = () => {
 
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar/>
       <Header />
       <Category />
-      {loading && <p>Loading error...</p>}
+      {loading && <p>Loading jobs...</p>}
       {error && <p>Error:{error}</p>}
-      {!loading && !error && <LatestJobs job={jobs} />}
+      {!loading && !error && <LatestJobs jobs={jobs} />}
       <Footer />
     </div>
   );

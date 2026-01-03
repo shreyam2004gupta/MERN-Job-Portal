@@ -11,22 +11,22 @@ export const registerCompany = async (req, res) => {
         success: false,
       });
     }
-    if (!description) {
-      return res.status(400).json({
-        message: "description is required",
-        success: false,
-      });
-    }
+    // if (!description) {
+    //   return res.status(400).json({
+    //     message: "description is required",
+    //     success: false,
+    //   });
+    // }
     let company = await Company.findOne({ name: companyname });
     if (company) {
-      return res.status(400).json({
+      return res.status(401).json({
         message: "company already exists",
         success: false,
       });
     }
     company = await Company.create({
       name: companyname,
-      description,
+      // description,
       userId: req.id,
     });
     return res.status(201).json({
@@ -65,7 +65,7 @@ export const getAllCompanies = async (req, res) => {
   }
 };
 
-export const getcompany = async (req, res) => {
+export const getcompanyById = async (req, res) => {
   try {
     const companyId = req.params.id;
     console.log("Backend getcompany called with companyId:", companyId);

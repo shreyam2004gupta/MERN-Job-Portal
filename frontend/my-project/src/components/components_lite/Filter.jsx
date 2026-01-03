@@ -61,9 +61,9 @@ const Filter = () => {
           <div key={index}>
             <h2>{data.filterType}</h2>
             {data.array.map((item, indx) => {
-              const itemId = `id${index} -${indx}`;
+              const itemId = `Id${index} -${indx}`;
               return(
-              <div className="flex items-center" key={item}>
+              <div className="flex items-center" key={itemId}>
                 <RadioGroupItem value={item} id={itemId}></RadioGroupItem>
                 <label htmlFor={itemId}>{item}</label>
               </div>

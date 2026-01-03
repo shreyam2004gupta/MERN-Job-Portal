@@ -51,7 +51,7 @@ const Description = () => {
           withCredentials: true,
         });
         console.log("Api response", res.data);
-        if (res.data.success) {
+        if (res.data.status) {
           dispatch(setSingleJob(res.data.job));
           setisapplied(
             res.data.job.applications.some(

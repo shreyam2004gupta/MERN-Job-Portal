@@ -13,10 +13,8 @@ import usegetcompany from "@/hooks/usegetcompany";
 
 const Companyset = () => {
   const params = useParams();
-  const { loading: companyLoading, error: companyError } = usegetcompany(
-    params.id
-  );
-  const { singleCompany } = useSelector((store) => store.company);
+  usegetcompany(params.id);
+  
   const [input, setinput] = useState({
     name: "",
     description: "",
@@ -24,13 +22,14 @@ const Companyset = () => {
     location: "",
     file: null,
   });
+  const { singleCompany } = useSelector((store) => store.company);
   const navigate = useNavigate();
   const [loading, setloading] = useState(false);
   const changeeventHandler = (event) => {
     setinput({ ...input, [event.target.name]: event.target.value });
   };
   const changefilehandler = (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files?.[0];
     setinput({ ...input, file });
   };
   const submithandler = async (event) => {
@@ -56,7 +55,7 @@ const Companyset = () => {
           withCredentials: true,
         }
       );
-      if (res.data.success) {
+      if (res.status ===200 && res.data.message) {
         toast.success(res.data.message);
         navigate("/admin/companies");
       }
@@ -80,13 +79,6 @@ const Companyset = () => {
     });
   }, [singleCompany]);
 
-  if (companyLoading) {
-    return <div>Loading company details...</div>;
-  }
-
-  if (companyError) {
-    return <div>Error loading company: {companyError}</div>;
-  }
 
   return (
     <div>
@@ -113,7 +105,7 @@ const Companyset = () => {
                 name="name"
                 value={input.name}
                 onChange={changeeventHandler}
-              ></Input>
+              />
             </div>
             <div>
               <Label className="font-bold">Company Description</Label>
@@ -123,7 +115,7 @@ const Companyset = () => {
                 name="description"
                 value={input.description}
                 onChange={changeeventHandler}
-              ></Input>
+              />
             </div>
             <div>
               <Label className="font-bold">Company Website</Label>
@@ -133,7 +125,7 @@ const Companyset = () => {
                 name="website"
                 value={input.website}
                 onChange={changeeventHandler}
-              ></Input>
+              />
             </div>
             <div>
               <Label className="font-bold">Company Location</Label>
@@ -143,7 +135,7 @@ const Companyset = () => {
                 name="location"
                 value={input.location}
                 onChange={changeeventHandler}
-              ></Input>
+              />
             </div>
             <div>
               <Label className="font-bold">Company logo</Label>
@@ -153,7 +145,7 @@ const Companyset = () => {
                 accept="image/*"
                 className="shadow-blue-700 hover:shadow-purple-700"
                 onChange={changefilehandler}
-              ></Input>
+              />
             </div>
           </div>
           <Button type="submit" className="">

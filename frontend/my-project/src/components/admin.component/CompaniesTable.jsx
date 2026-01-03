@@ -17,14 +17,12 @@ import {
 import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSearchCompanyByText } from "@/Redux/companyslice";
+
 
 const CompaniesTable = () => {
   const navigate = useNavigate();
-  const companyState = useSelector((store) => store.company);
 
-  const { companies = [], setSearchCompanyByText: searchText = "" } =
-    companyState || {};
+ const {companies,setSearchCompanyByText} = useSelector((store)=>store.company);
 
   const [filter, setfilter] = useState(companies);
 
@@ -34,15 +32,15 @@ const CompaniesTable = () => {
 
   useEffect(() => {
     const filtercompany =
-      companies.length > 0 &&
+      companies.length >= 0 &&
       companies.filter((company) => {
-        if (!searchText) {
+        if (!setSearchCompanyByText) {
           return true;
         }
-        return company?.name?.toLowerCase().includes(searchText.toLowerCase());
+        return company?.name?.toLowerCase().includes(setSearchCompanyByText.toLowerCase());
       });
     setfilter(filtercompany);
-  }, [companies, searchText]);
+  }, [companies, setSearchCompanyByText]);
 
   return (
     <div>
@@ -66,8 +64,8 @@ const CompaniesTable = () => {
             </TableRow>
           )}
           {filter.length > 0 &&
-            filter.map((company) => (
-              <TableRow key={company._id}>
+            filter?.map((company) => (
+              <TableRow key={company.id}>
                 <TableCell>
                   <Avatar>
                     <AvatarImage

@@ -15,13 +15,13 @@ const Jobs = () => {
   }
     const filterJobs = allJobs.filter((job)=>{
       return (
-        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        job.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
         job.location
-          .toLowerCase()
+          ?.toLowerCase()
           .includes(searchQuery.toLowerCase()) ||
-          job.experience.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          job.salary.toLowerCase().includes(searchQuery.toLowerCase()) 
+          job.experience?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          job.salary?.toLowerCase().includes(searchQuery.toLowerCase()) 
       );
     });
     setFilterJobs(filterJobs);

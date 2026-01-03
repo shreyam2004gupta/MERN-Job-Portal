@@ -30,7 +30,7 @@ const Header = () => {
          <div className="flex w-[30%] shadow-lg border border-gray-300 pl-3 rounded-full items-center gap-4 mx-auto">
             <input text="text"
             onChange={(e)=>setQuery(e.target.value)} placeholder="Find your Drean Job" className="outline-none border-none w-full"/>
-            <Button onclickHandler={searchjobHandler} className ="rounded-r-full" >
+            <Button onClick={searchjobHandler} className ="rounded-r-full" >
             <Search className="h-6 w-6"/>
             </Button>
          </div>

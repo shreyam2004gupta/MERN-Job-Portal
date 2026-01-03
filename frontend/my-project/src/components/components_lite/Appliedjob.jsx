@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table,TableBody,TableCaption, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Badge } from '../ui/badge';
+import { useSelector } from 'react-redux';
 const Appliedjob = () => {
   const { allAppliedJobs } = useSelector((store)=>store.job);
   return (
@@ -16,7 +17,7 @@ const Appliedjob = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-         { allAppliedJobs.length <= 0 ? <span>You Have not Applied any job yet</span> : allAppliedJobs.map((appliedjob) => (
+         { !allAppliedJobs || allAppliedJobs.length === 0 ? <span>You Have not Applied any job yet</span> : allAppliedJobs.map((appliedjob) => (
             <TableRow key={appliedjob._id}>
               <TableCell>{appliedjob?.createdAt.split("T")[0]}</TableCell>
               <TableCell>{appliedjob.job?.title}</TableCell>

@@ -44,7 +44,7 @@ export const getAppliedJob = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate({
         path: "job",
-        options: { sort: { created: -1 } },
+        options: { sort: { createdAt: -1 } },
         populate: { path: "company", options: { sort: { createdAt: -1 } } },
       });
     if (!application) {
@@ -66,7 +66,7 @@ export const getapplicants = async (req, res) => {
     const jobId = req.params.id;
     const job = await Job.findById(jobId).populate({
       path: "applications",
-      options: { sort: { created: -1 } },
+      options: { sort: { createdAt: -1 } },
       populate: { path: "applicant", options: { sort: { createdAt: -1 } } },
     });
     if (!job) {
@@ -92,7 +92,7 @@ export const updatestatus = async (req, res) => {
         success: false,
       });
     }
-    const application = await Application.findById(applicationId);
+    const application = await Application.findByOne({_id: applicationId});
     if (!application) {
       return res
         .status(404)

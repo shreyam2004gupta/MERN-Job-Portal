@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setSearchCompanyByText } from "@/Redux/companyslice";
+import { setSearchJobByText } from "@/Redux/jobSlice";
 import AdminJobTable from "./AdminJobTable";
 import useadminjob from "@/hooks/useadminjob";
 
@@ -15,7 +15,7 @@ const Jobscompany = () => {
   const [input, setinput] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setSearchCompanyByText(input));
+    dispatch(setSearchJobByText(input));
   }, [input]);
   return (
     <div>

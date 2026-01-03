@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 
 const shortlistedStatus = ["Accepted","Rejected"];
 const ApplicantsTable = () => {
-    const {applicants} =useSelector(store => store.applicants);
+    const {applicants} =useSelector(store => store.application);
     const statusHandler =async(status,id)=>{
         console.log("called");
         try{
@@ -41,17 +41,17 @@ const ApplicantsTable = () => {
           <TableHead className="text-right">Action</TableHead>
         </TableRow>
         <TableBody>{
-            applicants && applicants.application.map((item)=>(
+            applicants && applicants.applications.map((item)=>(
                 <tr key={item._id}></tr>
             ))}
           <tr>
-            <TableCell>{item?.applicants?.fullname}</TableCell>
-            <TableCell>{item?.applicants?.email}</TableCell>
-            <TableCell>{item?.applicants?.phoneNumber}</TableCell>
+            <TableCell>{item?.applicant?.fullname}</TableCell>
+            <TableCell>{item?.applicant?.email}</TableCell>
+            <TableCell>{item?.applicant?.phoneNumber}</TableCell>
             <TableCell>
-                {item.applicants?.profile?.resume ? (
+                {item.applicant?.profile?.resume ? (
                     <a className =" text-blue-600 cursor-pointer"
-                    href ={item?.applicants?.profile?.resume}
+                    href ={item?.applicant?.profile?.resume}
                     target="_blank"
                     rel="noopener noreferrer"
                     >Download
@@ -60,14 +60,14 @@ const ApplicantsTable = () => {
                     <span>NA</span>
                 )}
             </TableCell>
-            <TableCell>{item?.applicants?.createdAt.split("T")[0]}</TableCell>
+            <TableCell>{item?.applicant?.createdAt.split("T")[0]}</TableCell>
             <TableCell className="text-right">
               <Popover>
                 <PopoverTrigger>
                   <MoreHorizontal />
                 </PopoverTrigger>
                 <PopoverContent className="w-32">
-                  {shortlistedStatus.map((status, index) => {
+                  {shortlistingStatus.map((status, index) => {
                     return (
                       <div 
                       onClick={()=> statusHandler(status,item?._id)}

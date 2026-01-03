@@ -10,7 +10,7 @@ import { setSingleApplication } from "@/Redux/applicationSlice";
 const Applicants = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { applicants } = useSelector((store) => store.applications);
+  const { applicants } = useSelector((store) => store.application);
   useEffect(() => {
     const fetchAllApplicants = async () => {
       try {
@@ -27,13 +27,13 @@ const Applicants = () => {
       }
     };
     fetchAllApplicants();
-  }, [dispatch, params.id, APPLICANTS_API_ENDPOINT]);
+  }, []);
   return (
     <div>
       <Navbar />
       <div className="max-w-7xl mx-auto">
         <h1 className="font-bold text-xl my-10">
-          Applicants {applicants?.applicants?.length}
+          Applicants {applicants?.applications?.length}
         </h1>
         <ApplicantsTable />
       </div>

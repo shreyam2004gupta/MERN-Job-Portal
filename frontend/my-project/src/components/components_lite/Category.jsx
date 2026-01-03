@@ -25,8 +25,8 @@ const Categories= [
   const Category = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const searchjobHandler = () => {
-      dispatchEvent(setSearchQuery(query));
+    const searchjobHandler = (query) => {
+      dispatch(setSearchQuery(query));
       navigate("/Browser");
     };
   return (
@@ -37,10 +37,10 @@ const Categories= [
       <Carousel className="w-full max-w-xl mx-auto">
         <CarouselContent>
             {
-                Categories.map((Categories,index)=>{
+                Categories.map((categories,index)=>{
                     return(
                     <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                        <Button onClick={()=>searchjobHandler(Categories)}>{Categories}</Button>
+                        <Button onClick={()=>searchjobHandler(categories)}>{categories}</Button>
                         </CarouselItem>
                         );
                 })

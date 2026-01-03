@@ -174,7 +174,7 @@ const PostJob = () => {
             </div>
 
             <div>
-              {companies.length >= 0 && (
+              {companies.length > 0 && (
                 <Select onValueChange={selectChangeHandler}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a Company" />

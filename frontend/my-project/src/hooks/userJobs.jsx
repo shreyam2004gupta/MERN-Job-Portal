@@ -17,8 +17,11 @@ const userJobs = () => {
         const res = await axios.get(`${JOB_API_ENDPOINT}/get?keyword=${searchedQuery}`, {
           withCredentials: true,
         });
-        if (res.data.success) {
+        console.log("API Response:",res.data);
+        if (res.data.status) {
           dispatch(setAllJobs(res.data.jobs));
+        }else{
+          setError("Failed to fetched job");
         }
       } catch (error) {
         console.log(error);

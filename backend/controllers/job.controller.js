@@ -38,11 +38,12 @@ export const postJob = async (req, res) => {
       jobType,
       position,
       company: companyId,
-      experience: experience,
+      experienceLevel: experience,
       created_by: req.id,
     });
-    await job.save();
-    return res
+    // await job.save();
+    // return 
+    res
       .status(201)
       .json({ message: "job created successfully", success: true, job });
   } catch (error) {
@@ -58,10 +59,10 @@ export const getalljobs = async (req, res) => {
       $or: [
         { title: { $regex: keyword, $options: "i" } },
         { description: { $regex: keyword, $options: "i" } },
-        { requirements: { $regex: keyword, $options: "i" } },
-        { location: { $regex: keyword, $options: "i" } },
-        { jobType: { $regex: keyword, $options: "i" } },
-        { position: { $regex: keyword, $options: "i" } },
+        // { requirements: { $regex: keyword, $options: "i" } },
+        // { location: { $regex: keyword, $options: "i" } },
+        // { jobType: { $regex: keyword, $options: "i" } },
+        // { position: { $regex: keyword, $options: "i" } },
       ],
     };
     const jobs = await Job.find(query).populate({

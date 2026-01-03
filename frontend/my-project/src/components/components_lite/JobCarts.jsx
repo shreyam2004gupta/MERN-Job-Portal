@@ -14,7 +14,7 @@ const JobCarts = ({ job }) => {
     >
       <div>
         <h1 className="text-lg font-medium">
-          {job.company?.name || "Company Name"}
+          {job.name }
         </h1>
         <p className="text-sm text-gray-400">INDIA</p>
       </div>
@@ -29,7 +29,7 @@ const JobCarts = ({ job }) => {
           </span>
         </Badge>
         <Badge className={"text-purple-400 hover:text-black"} variant={"ghost"}>
-          {job.salary}
+          {job.salary}lpa
         </Badge>
         <Badge className={"text-red-400 hover:text-black"} variant={"ghost"}>
           {job.location}

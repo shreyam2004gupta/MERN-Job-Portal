@@ -27,7 +27,7 @@ const Companycreate = () => {
     try {
       const res = await axios.post(
         `${APPLICANTS_API_COMPANY}/register`,
-        { companyname: companyName, description },
+        { companyname: companyName },
         {
           headers: {
             "Content-Type": "application/json",
@@ -56,7 +56,10 @@ const Companycreate = () => {
     <div>
       <Navbar />
       <div className="max-w-4xl mx-auto">
-        <h1 className="font-bold text-2xl ">Company Details</h1>
+        <div className="my-10">
+          <h1 className="font-bold text-2xl ">Company Name</h1>
+          <p className="text-gray-600">Company Description</p>
+        </div>
         <Label>Company Name</Label>
         <Input
           type="text"
@@ -64,14 +67,6 @@ const Companycreate = () => {
           className="my-4 "
           value={companyName}
           onChange={(e) => setCompany(e.target.value)}
-        />
-        <Label>Description</Label>
-        <Input
-          type="text"
-          placeholder="Company Description"
-          className="my-4 "
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
         />
         <div className="flex item-center ">
           <Button

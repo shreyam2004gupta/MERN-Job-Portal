@@ -58,7 +58,7 @@ useEffect(()=>{
   if(user){
     Navigate("/");
   }
-},[])
+},[]);
   return (
     <div>
       <Navbar></Navbar>
