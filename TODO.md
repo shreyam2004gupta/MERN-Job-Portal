@@ -1,0 +1,6 @@
+- [ ] Update import statement in ApplicantsTable.jsx to include Table, TableHeader, TableRow
+- [ ] Fix table header to use TableHeader and TableHead
+- [ ] Fix table body to properly map over applicants and use TableRow/TableCell
+- [ ] Add missing Job Title column
+- [ ] Correct order of columns to match header
+- [ ] Fix variable name from shortlistingStatus to shortlistedStatus
