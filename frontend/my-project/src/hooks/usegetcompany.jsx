@@ -8,7 +8,7 @@ const usegetcompany = (companyId) => {
   const dispatch = useDispatch();
   // const [loading, setLoading] = useState(false);
   // const [error, setError] = useState(null);
-  console.log(res.data);
+  // console.log(res.data);
 
   useEffect(() => {
     console.log("usegetcompany called with companyId:", companyId);

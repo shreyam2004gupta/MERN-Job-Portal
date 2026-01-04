@@ -20,7 +20,7 @@ const login = () => {
   });
   const Navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading,user } = useSelector((store) => store.auth);
+  const { loading} = useSelector((store) => store.auth);
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -54,11 +54,7 @@ const login = () => {
       dispatch(setLoading(false));
     }
   };
-useEffect(()=>{
-  if(user){
-    Navigate("/");
-  }
-},[]);
+
   return (
     <div>
       <Navbar></Navbar>

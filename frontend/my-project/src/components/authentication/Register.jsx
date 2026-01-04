@@ -64,12 +64,12 @@ const Register = () => {
       dispatch(setLoading(false));
     }
   };
-  const {  user } = useSelector((store) => store.auth);
-  useEffect(()=>{
-    if(user){
-      navigate("/");
-    }
-  },[])
+  // const {  user } = useSelector((store) => store.auth);
+  // useEffect(()=>{
+  //   if(user){
+  //     navigate("/");
+  //   }
+  // },[])
   return (
     <div>
       <Navbar></Navbar>
