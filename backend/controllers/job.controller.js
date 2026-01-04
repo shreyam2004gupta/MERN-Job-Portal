@@ -5,7 +5,7 @@ export const postJob = async (req, res) => {
     const {
       title,
       description,
-      requirement,
+      requirements,
       salary,
       location,
       jobType,
@@ -16,7 +16,7 @@ export const postJob = async (req, res) => {
     if (
       !title ||
       !description ||
-      !requirement ||
+      !requirements ||
       !salary ||
       !location ||
       !jobType ||
@@ -32,7 +32,7 @@ export const postJob = async (req, res) => {
     const job = await Job.create({
       title,
       description,
-      requirements: requirement.split(","),
+      requirements: requirements.split(","),
       salary: Number(salary),
       location,
       jobType,
@@ -42,7 +42,7 @@ export const postJob = async (req, res) => {
       created_by: req.id,
     });
     // await job.save();
-    // return 
+    // return
     res
       .status(201)
       .json({ message: "job created successfully", success: true, job });
@@ -65,9 +65,11 @@ export const getalljobs = async (req, res) => {
         // { position: { $regex: keyword, $options: "i" } },
       ],
     };
-    const jobs = await Job.find(query).populate({
-      path:"company",
-    }).sort({createdAt:-1});
+    const jobs = await Job.find(query)
+      .populate({
+        path: "company",
+      })
+      .sort({ createdAt: -1 });
     if (jobs.length === 0) {
       return res.status(404).json({
         message: "no job found",
@@ -90,8 +92,8 @@ export const getjobid = async (req, res) => {
   try {
     const jobId = req.params.id;
     const job = await Job.findById(jobId).populate({
-      path:"applications",
-    })
+      path: "applications",
+    });
     if (!job) {
       return res.status(404).json({
         message: "job not found",
@@ -117,9 +119,9 @@ export const getadmin = async (req, res) => {
     const jobs = await Job.find({
       created_by: adminId,
     }).populate({
-      path:"company",
-      sort:{createdAt:-1},
-    })
+      path: "company",
+      sort: { createdAt: -1 },
+    });
     if (!jobs) {
       return res.status(404).json({
         message: "no jobs found",
@@ -130,7 +132,7 @@ export const getadmin = async (req, res) => {
       jobs,
       success: true,
     });
-  } catch(error) {
+  } catch (error) {
     console.error(error);
     return res.status(500).json({
       message: "server error",

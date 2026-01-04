@@ -9,9 +9,11 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    requirement: [{
-      type: String,
-    },],
+    requirements: [
+      {
+        type: String,
+      },
+    ],
     location: {
       type: String,
       required: true,
@@ -24,7 +26,7 @@ const jobSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    experience: {
+    experienceLevel: {
       type: Number,
       required: true,
     },
@@ -34,7 +36,7 @@ const jobSchema = new mongoose.Schema(
       required: true,
     },
     position: {
-      type: String,
+      type: Number,
       required: true,
     },
     created_by: {

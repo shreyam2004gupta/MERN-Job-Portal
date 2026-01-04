@@ -15,7 +15,7 @@ const Applicants = () => {
     const fetchAllApplicants = async () => {
       try {
         const res = await axios.get(
-          `/${APPLICANTS_API_ENDPOINT}/${params.id}/applicants`,
+          `${APPLICANTS_API_ENDPOINT}/${params.id}/applicants`,
           {
             withCredentials: true,
           }

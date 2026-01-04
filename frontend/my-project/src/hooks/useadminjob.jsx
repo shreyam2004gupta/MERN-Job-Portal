@@ -1,4 +1,4 @@
-import { setAllAdmin} from "@/Redux/jobSlice";
+import { setAllAdmin } from "@/Redux/jobSlice";
 import { JOB_API_ENDPOINT } from "@/utils/data";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -16,9 +16,9 @@ const useadminjob = () => {
         const res = await axios.get(`${JOB_API_ENDPOINT}/getadminjobs`, {
           withCredentials: true,
         });
-        if (res.data.status) {
+        if (res.data.success) {
           dispatch(setAllAdmin(res.data.jobs));
-        }else{
+        } else {
           setError("failed");
         }
       } catch (error) {

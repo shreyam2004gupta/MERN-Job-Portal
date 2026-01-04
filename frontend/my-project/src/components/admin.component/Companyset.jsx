@@ -13,8 +13,10 @@ import usegetcompany from "@/hooks/usegetcompany";
 
 const Companyset = () => {
   const params = useParams();
-  usegetcompany(params.id);
-  
+  const { loading, error } = usegetcompany(
+    params.id && params.id !== "undefined" ? params.id : null
+  );
+
   const [input, setinput] = useState({
     name: "",
     description: "",
@@ -24,7 +26,7 @@ const Companyset = () => {
   });
   const { singleCompany } = useSelector((store) => store.company);
   const navigate = useNavigate();
-  const [loading, setloading] = useState(false);
+  const [updating, setUpdating] = useState(false);
   const changeeventHandler = (event) => {
     setinput({ ...input, [event.target.name]: event.target.value });
   };
@@ -44,7 +46,7 @@ const Companyset = () => {
       formdata.append("file", input.file);
     }
     try {
-      setloading(true);
+      setUpdating(true);
       const res = await axios.put(
         `${APPLICANTS_API_COMPANY}/update/${params.id}`,
         formdata,
@@ -55,7 +57,7 @@ const Companyset = () => {
           withCredentials: true,
         }
       );
-      if (res.status ===200 && res.data.message) {
+      if (res.status === 200 && res.data.message) {
         toast.success(res.data.message);
         navigate("/admin/companies");
       }
@@ -65,7 +67,7 @@ const Companyset = () => {
         error.response?.data?.message || error.message || "An error occurred"
       );
     } finally {
-      setloading(false);
+      setUpdating(false);
     }
   };
 
@@ -78,7 +80,6 @@ const Companyset = () => {
       file: null,
     });
   }, [singleCompany]);
-
 
   return (
     <div>

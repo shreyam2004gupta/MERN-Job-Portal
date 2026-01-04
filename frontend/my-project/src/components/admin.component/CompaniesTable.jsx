@@ -18,11 +18,12 @@ import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-
 const CompaniesTable = () => {
+  
+  const { companies, searchCompanyByText } = useSelector(
+    (store) => store.company
+  );
   const navigate = useNavigate();
-
- const {companies,setSearchCompanyByText} = useSelector((store)=>store.company);
 
   const [filter, setfilter] = useState(companies);
 
@@ -34,13 +35,15 @@ const CompaniesTable = () => {
     const filtercompany =
       companies.length >= 0 &&
       companies.filter((company) => {
-        if (!setSearchCompanyByText) {
+        if (!searchCompanyByText) {
           return true;
         }
-        return company?.name?.toLowerCase().includes(setSearchCompanyByText.toLowerCase());
+        return company?.name
+          ?.toLowerCase()
+          .includes(searchCompanyByText.toLowerCase());
       });
     setfilter(filtercompany);
-  }, [companies, setSearchCompanyByText]);
+  }, [companies, searchCompanyByText]);
 
   return (
     <div>

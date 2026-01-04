@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import Companyset from "./Companyset";
 
-const comapnyArray=[1];
+const comapnyArray=[];
 const PostJob = () => {
   const [input, setInput] = useState({
     title: "",
