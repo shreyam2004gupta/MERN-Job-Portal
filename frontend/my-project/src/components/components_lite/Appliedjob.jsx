@@ -10,9 +10,9 @@ import {
 } from "../ui/table";
 import { Badge } from "../ui/badge";
 import { useSelector } from "react-redux";
-import usegetallappliedjobs from "@/hooks/usegetallappliedjobs";
+// import usegetallappliedjobs from "@/hooks/usegetallappliedjobs";
 const Appliedjob = () => {
-  usegetallappliedjobs();
+  // usegetallappliedjobs();
   const { allAppliedJobs } = useSelector((store) => store.job);
   return (
     <div>
@@ -38,7 +38,7 @@ const Appliedjob = () => {
               <TableRow key={appliedjob._id}>
                 <TableCell>{appliedjob?.createdAt.split("T")[0]}</TableCell>
                 <TableCell>{appliedjob.job?.title}</TableCell>
-                <TableCell>{appliedjob.job?.company.name}</TableCell>
+                <TableCell>{appliedjob.job?.company?.name}</TableCell>
                 <TableCell>
                   <Badge
                     className={`${

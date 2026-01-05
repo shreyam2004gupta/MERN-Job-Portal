@@ -18,10 +18,21 @@ const usegetallappliedjobs = () => {
           console.log("Dispatching applied jobs:", res.data.application);
           dispatch(setAllAppliedJobs(res.data.application));
         } else {
-          console.log("API returned success false");
+          console.log("API returned success false:", res.data.message);
         }
       } catch (error) {
         console.log("Error fetching applied jobs:", error);
+        // if (error.response) {
+        //   console.log(
+        //     "Response error:",
+        //     error.response.status,
+        //     error.response.data
+        //   );
+        // } else if (error.request) {
+        //   console.log("Request error: No response received");
+        // } else {
+        //   console.log("General error:", error.message);
+        // }
       }
     };
     fetchAppliedJobs();
