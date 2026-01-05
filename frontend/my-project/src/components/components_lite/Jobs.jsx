@@ -4,8 +4,10 @@ import Filter from "./Filter";
 import Job9 from "./Job9";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import userJobs from "@/hooks/userJobs";
 
 const Jobs = () => {
+  const { loading, error } = userJobs();
   const { allJobs, searchedQuery } = useSelector((store) => store.job);
   const [filterJobs, setFilterJobs] = useState(allJobs);
   useEffect(() => {
@@ -18,8 +20,12 @@ const Jobs = () => {
         job.title?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
         job.description?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
         job.location?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-        String(job.experienceLevel || '').toLowerCase().includes(searchedQuery.toLowerCase()) ||
-        String(job.salary || '').toLowerCase().includes(searchedQuery.toLowerCase())
+        String(job.experienceLevel || "")
+          .toLowerCase()
+          .includes(searchedQuery.toLowerCase()) ||
+        String(job.salary || "")
+          .toLowerCase()
+          .includes(searchedQuery.toLowerCase())
       );
     });
     setFilterJobs(filterJobs);
@@ -33,7 +39,11 @@ const Jobs = () => {
             <Filter />
           </div>
 
-          {filterJobs.length <= 0 ? (
+          {loading ? (
+            <span>Loading jobs...</span>
+          ) : error ? (
+            <span>Error: {error}</span>
+          ) : filterJobs.length <= 0 ? (
             <span>Job Not Found ! </span>
           ) : (
             <div className="flex-1 overflow-y-auto pb-5">

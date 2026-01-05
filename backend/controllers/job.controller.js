@@ -70,12 +70,6 @@ export const getalljobs = async (req, res) => {
         path: "company",
       })
       .sort({ createdAt: -1 });
-    if (jobs.length === 0) {
-      return res.status(404).json({
-        message: "no job found",
-        success: false,
-      });
-    }
     return res.status(200).json({
       jobs,
       success: true,
