@@ -15,7 +15,7 @@ const userJobs = () => {
       setError(null);
       try {
         const res = await axios.get(
-          `${JOB_API_ENDPOINT}/get?keyword=${searchedQuery}`,
+          `${JOB_API_ENDPOINT}/get`,
           {
             withCredentials: true,
           }

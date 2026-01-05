@@ -15,20 +15,48 @@ const Jobs = () => {
       setFilterJobs(allJobs);
       return;
     }
-    const filterJobs = allJobs.filter((job) => {
-      return (
-        job.title?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-        job.description?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-        job.location?.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-        String(job.experienceLevel || "")
-          .toLowerCase()
-          .includes(searchedQuery.toLowerCase()) ||
-        String(job.salary || "")
-          .toLowerCase()
-          .includes(searchedQuery.toLowerCase())
-      );
+    const filtered = allJobs.filter((job) => {
+      const query = searchedQuery.toLowerCase();
+      
+      if (
+        job.title?.toLowerCase().includes(query) ||
+        job.description?.toLowerCase().includes(query) ||
+        job.location?.toLowerCase().includes(query)
+      ) {
+        return true;
+      }
+      
+      if (query.includes("years")) {
+        const expMatch = query.match(/(\d+)-(\d+)\s*years/);
+        if (expMatch) {
+          const minExp = parseInt(expMatch[1]);
+          const maxExp = parseInt(expMatch[2]);
+          if (job.experienceLevel >= minExp && job.experienceLevel <= maxExp) {
+            return true;
+          }
+        }
+      }
+      
+      if (query.includes("k")) {
+        const salMatch = query.match(/(\d+)k-(\d+)k/);
+        if (salMatch) {
+          const minSal = parseInt(salMatch[1]) * 1000;
+          const maxSal = parseInt(salMatch[2]) * 1000;
+          if (job.salary >= minSal && job.salary <= maxSal) {
+            return true;
+          }
+        }
+        const salMatchOver = query.match(/(\d+)k\+/);
+        if (salMatchOver) {
+          const minSal = parseInt(salMatchOver[1]) * 1000;
+          if (job.salary >= minSal) {
+            return true;
+          }
+        }
+      }
+      return false;
     });
-    setFilterJobs(filterJobs);
+    setFilterJobs(filtered);
   }, [allJobs, searchedQuery]);
   return (
     <div>

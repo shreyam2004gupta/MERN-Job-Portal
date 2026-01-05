@@ -29,6 +29,7 @@ export const registerCompany = async (req, res) => {
       // description,
       userId: req.id,
     });
+    console.log("Company created with ID:", company._id);
     return res.status(201).json({
       message: "company created successfully",
       company,
@@ -69,16 +70,23 @@ export const getcompanyById = async (req, res) => {
   try {
     const companyId = req.params.id;
     console.log("Backend getcompany called with companyId:", companyId);
-    if(!companyId || companyId ==="undefined"){
+    if (!companyId || companyId === "undefined") {
       return res.status(400).json({
-        message:"company id missing",
-        success:false,
-      })
+        message: "company id missing",
+        success: false,
+      });
     }
     const company = await Company.findById(companyId);
-    if (!company ) {
+    if (!company) {
       return res.status(404).json({
         message: "company not found",
+        success: false,
+      });
+    }
+    // Check if the company belongs to the authenticated user
+    if (company.userId.toString() !== req.id.toString()) {
+      return res.status(403).json({
+        message: "You are not authorized to access this company",
         success: false,
       });
     }
@@ -88,10 +96,10 @@ export const getcompanyById = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    if(error.name==="CastError"){
+    if (error.name === "CastError") {
       return res.status(400).json({
-        message:"invalid company id format",
-        success:false,
+        message: "invalid company id format",
+        success: false,
       });
     }
     return res.status(500).json({
@@ -104,7 +112,7 @@ export const getcompanyById = async (req, res) => {
 export const upadtecompany = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id || id === 'undefined') {
+    if (!id || id === "undefined") {
       return res.status(400).json({
         message: "Invalid company ID",
         success: false,
@@ -112,28 +120,24 @@ export const upadtecompany = async (req, res) => {
     }
     const { name, description, website, location } = req.body;
     const file = req.file;
-    let logo =req.body.logo;
-     if(file){
-        const fileUri = getDataUri(file);
-       const cloudinaryResponse = await cloudinary.uploader.upload(
-         fileUri.content
-       );
-        logo = cloudinaryResponse.secure_url;
-     }
-    
+    let logo = req.body.logo;
+    if (file) {
+      const fileUri = getDataUri(file);
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        fileUri.content
+      );
+      logo = cloudinaryResponse.secure_url;
+    }
+
     const updateData = { name, description, website, location };
-      if(logo){
-        updateData.logo=logo;
-      }
-     
-    const company = await Company.findByIdAndUpdate(
-      id,
-      updateData,
-      {
-        new: true,
-      }
-    
-    );
+    if (logo) {
+      updateData.logo = logo;
+    }
+
+    const company = await Company.findByIdAndUpdate(id, updateData, {
+      new: true,
+    });
+    console.log("Company updated:", company);
     if (!company) {
       return res.status(404).json({
         message: "company not found",
@@ -144,8 +148,7 @@ export const upadtecompany = async (req, res) => {
       message: "company updated",
       success: true,
     });
-  
- } catch (error) {
+  } catch (error) {
     console.error(error);
     return res.status(500).json({
       message: "server error",

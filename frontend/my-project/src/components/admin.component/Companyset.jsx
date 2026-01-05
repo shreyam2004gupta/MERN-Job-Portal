@@ -13,9 +13,17 @@ import usegetcompany from "@/hooks/usegetcompany";
 
 const Companyset = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const { loading, error } = usegetcompany(
     params.id && params.id !== "undefined" ? params.id : null
   );
+
+  useEffect(() => {
+    if (error && error.response?.status === 404) {
+      toast.error("Company not found. Redirecting to companies list.");
+      navigate("/admin/companies");
+    }
+  }, [error, navigate]);
 
   const [input, setinput] = useState({
     name: "",
@@ -25,7 +33,6 @@ const Companyset = () => {
     file: null,
   });
   const { singleCompany } = useSelector((store) => store.company);
-  const navigate = useNavigate();
   const [updating, setUpdating] = useState(false);
   const changeeventHandler = (event) => {
     setinput({ ...input, [event.target.name]: event.target.value });
