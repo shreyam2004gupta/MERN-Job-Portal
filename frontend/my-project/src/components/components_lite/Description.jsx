@@ -51,7 +51,7 @@ const Description = () => {
           withCredentials: true,
         });
         console.log("Api response", res.data);
-        if (res.data.status) {
+        if (res.data.success) {
           dispatch(setSingleJob(res.data.job));
           setisapplied(
             res.data.job.applications.some(
@@ -130,7 +130,8 @@ const Description = () => {
           <span className="pl-4 font-normal ">{singleJob?.location}</span>
         </h1>
         <h1>
-          Salary:<span className="pl-4 font-normal ">{singleJob?.salary} lpa</span>
+          Salary:
+          <span className="pl-4 font-normal ">{singleJob?.salary} lpa</span>
         </h1>
         <h1>
           Total Applicants:

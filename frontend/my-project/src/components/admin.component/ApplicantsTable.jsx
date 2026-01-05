@@ -35,7 +35,7 @@ const ApplicantsTable = () => {
         toast.success(res.data.message);
       }
     } catch (error) {
-      toast.error(error.response.message);
+      toast.error(error.response?.data?.message || "An error occurred");
     }
   };
   return (

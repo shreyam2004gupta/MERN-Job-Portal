@@ -4,25 +4,29 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-const usegetallappliedjobs =()=>{
-    const dispatch =useDispatch();
-    useEffect(()=>{
-        const fetchAppliedJobs = async ()=>{
-            try{
-                const res = await axios.get(`${APPLICANTS_API_ENDPOINT}/get`,{
-                    withCredentials:true,
-                });
-                console.log("API response",res.data);
-                if(res.data.success){
-                    dispatch(setAllAppliedJobs(res.data.application));
-                }
-            }catch(error){
-                console.log(error);
-            }
-        };
-        fetchAppliedJobs();
-    },[dispatch]);
-    return null;
+const usegetallappliedjobs = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchAppliedJobs = async () => {
+      try {
+        console.log("Fetching applied jobs...");
+        const res = await axios.get(`${APPLICANTS_API_ENDPOINT}/get`, {
+          withCredentials: true,
+        });
+        console.log("API response", res.data);
+        if (res.data.success) {
+          console.log("Dispatching applied jobs:", res.data.application);
+          dispatch(setAllAppliedJobs(res.data.application));
+        } else {
+          console.log("API returned success false");
+        }
+      } catch (error) {
+        console.log("Error fetching applied jobs:", error);
+      }
+    };
+    fetchAppliedJobs();
+  }, [dispatch]);
+  return null;
 };
 
 export default usegetallappliedjobs;

@@ -19,7 +19,7 @@ export const applyjob = async (req, res) => {
     }
     const job = await Job.findById(jobId);
     if (!job) {
-      return res.server(404).json({ message: "job not found", success: false });
+      return res.status(404).json({ message: "job not found", success: false });
     }
     const newapplication = await Application.create({
       job: jobId,
@@ -92,7 +92,7 @@ export const updatestatus = async (req, res) => {
         success: false,
       });
     }
-    const application = await Application.findByOne({_id: applicationId});
+    const application = await Application.findOne({ _id: applicationId });
     if (!application) {
       return res
         .status(404)
