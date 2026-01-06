@@ -6,7 +6,7 @@ import {  setSearchQuery } from "@/Redux/jobSlice";
 import userJobs from "@/hooks/userJobs";
 
 
-const Browse = () => {
+const Browser = () => {
   userJobs();
   const {allJobs}= useSelector((store)=>store.job);
   const dispatch =useDispatch();
@@ -30,4 +30,4 @@ const Browse = () => {
   );
 };
 
-export default Browse;
+export default Browser;
